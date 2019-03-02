@@ -1,6 +1,6 @@
 <aside class="app-sidebar ">
 				<div class="sidebar-img">
-					<a class="navbar-brand" href="index-2.html"><img alt="..." class="navbar-brand-img main-logo" src="<?php echo base_url(); ?>assets/administration/img/brand/logo-dark.png"> <img alt="..." class="navbar-brand-img logo" src="<?php echo base_url(); ?>assets/administration/img/brand/logo.png"></a>
+					<a class="navbar-brand" href="index-2.html"><img alt="..." class="navbar-brand-img main-logo" src="<?php echo base_url(); ?>assets/administration/img/LOGO.jpg"> <img alt="..." class="navbar-brand-img logo" src="<?php echo base_url(); ?>assets/administration/img/LOGO.jpg"></a>
 					<ul class="side-menu">
 
 						<!--Menu tableau de bord debut-->
