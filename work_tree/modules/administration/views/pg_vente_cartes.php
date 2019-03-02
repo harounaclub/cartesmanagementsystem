@@ -62,6 +62,16 @@
                                                 </div>
                                                 <div class="col-md-6">
 
+                                                <div class="form-group">
+                                                <label for="sel1">Civilité</label>
+                                                <select class="form-control" id="civilite">
+                                                    <option value="Mr">Monsieur</option>
+                                                    <option value="Mme">Madame</option>
+                                                    <option value="Mlle">Mademoiselle</option>
+                                                   
+                                                </select>
+                                                </div> 
+
                                                     <div class="form-group">
                                                                         <input type="text" class="form-control" id="nom_prenoms_client" placeholder="Entrer le nom et le prenoms du client" value="">
                                                                         
@@ -288,10 +298,12 @@ $( "#btn_valider" ).click(function(e) {
 
     var code_commercial=$("#code_commercial").val();
     var code_carte=$("#code_carte").val();
-
+    var civilite=$("#civilite").val();
     var nom_prenoms_client=$("#nom_prenoms_client").val();
     var numero_telephone_mobile_client=$("#numero_telephone_mobile_client").val();
     var email_client=$("#email_client").val();
+
+    console.log(civilite);
 
     $.ajax({
 
@@ -300,6 +312,7 @@ $( "#btn_valider" ).click(function(e) {
         dataType:'json',
         data: {
             
+            civilite:civilite,
             code_commercial:code_commercial,
             code_carte:code_carte,
             nom_prenoms_client:nom_prenoms_client,

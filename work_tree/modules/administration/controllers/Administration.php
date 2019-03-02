@@ -353,7 +353,8 @@ class Administration extends MX_Controller {
 
     function achatCarte(){
 
-
+        
+        $this->form_validation->set_rules('civilite', 'civilite', 'trim|required');
         $this->form_validation->set_rules('code_commercial', 'code commercial', 'trim|required');
         $this->form_validation->set_rules('code_carte', 'code_carte', 'trim|required');
         $this->form_validation->set_rules('nom_prenoms_client', 'nom_prenoms_client', 'trim|required');
@@ -364,6 +365,7 @@ class Administration extends MX_Controller {
 	    if($this->form_validation->run()) 
 	    {
             
+            $civilite=$this->input->post('civilite');
             $code_commercial=$this->input->post('code_commercial');
             $code_carte=$this->input->post('code_carte');
             $nom_prenoms_client=$this->input->post('nom_prenoms_client');
@@ -377,6 +379,7 @@ class Administration extends MX_Controller {
             $data_client = array(
 
                 'id_client'  => $id_client,
+                'civilite'  => $civilite,
                 'nom_prenoms_client'  => $nom_prenoms_client,            
                 'numero_telephone_mobile_client'=> $numero_telephone_mobile_client,
                 'email_client'=> $email_client, 
@@ -391,20 +394,21 @@ class Administration extends MX_Controller {
 
 
             $token=$this->get_token();
-            $tel="58173208";
+            
             $taille_nom_prenoms=strlen($nom_prenoms_client);
             if($taille_nom_prenoms <= 16){
 
-                $nom_complet=$nom_prenoms_client;
+                $nom_complet=$civilite." ".$nom_prenoms_client;
             }else{
 
-                $nom_complet=substr($nom_prenoms_client,0,14).".";
+                $nom_complet=$civilite." ".substr($nom_prenoms_client,0,14).".";
             }
 
             $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);
+            $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
         
-        $message="Bonjour M $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client ";
-        $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$tel&message=$message");
+        $message="Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client ";
+        $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
 
             $arr = array(
                 'status' => 1,

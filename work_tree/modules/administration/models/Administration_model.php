@@ -161,6 +161,21 @@ class Administration_model extends CI_Model {
   
       }
 
+      function mdl_infoTelClient($id_client)
+      {
+  
+        $infoCartesClient=$this->mongo_db->where(array('id_client' => $id_client))->get('clients');
+        $numero_telephone_mobile_client="0000";
+        foreach($infoCartesClient as $value){
+
+            $numero_telephone_mobile_client=$value["numero_telephone_mobile_client"];
+        }
+
+        return $numero_telephone_mobile_client;
+    
+  
+      }
+
       function mdl_listCartesEnStock($id_lot)
       {
 
