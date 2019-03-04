@@ -289,7 +289,7 @@ class Administration extends MX_Controller {
 
         $this->form_validation->set_rules('nom_prenoms_commerciaux', 'nom(s) et prenom(s)', 'trim|required');
         $this->form_validation->set_rules('telephone_mobile_commerciaux', 'telephone_mobile_commerciaux', 'trim|required');
-        $this->form_validation->set_rules('email_commerciaux', 'email_commerciaux', 'trim|required');
+        $this->form_validation->set_rules('email_commerciaux', 'email_commerciaux', 'trim');
         $this->form_validation->set_rules('commission_commerciaux', 'commission_commerciaux', 'trim|required');
         
 	      
