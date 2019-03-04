@@ -407,13 +407,15 @@ class Administration extends MX_Controller {
             $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);
             $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
         
-        $message="Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client ";
-        $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
+        $message=urlencode("Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client");
+        $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
 
             $arr = array(
                 'status' => 1,
               );
             echo json_encode($arr);
+
+        
             
 
            
@@ -543,7 +545,7 @@ class Administration extends MX_Controller {
     function envoiSmsTest(){
 
         $token=$this->get_token();
-        $tel="58173208";
+        $tel="54823136";
         $message="Bonjour M xxxxxxx xxxxxxxx,votre carte prixkdo n°0000 0000 0000 0000 est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : 0000 ";
         
         $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$tel&message=$message");

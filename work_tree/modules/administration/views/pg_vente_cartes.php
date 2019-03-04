@@ -309,7 +309,7 @@ $( "#btn_valider" ).click(function(e) {
 
         type: 'POST',
         url: '<?php echo base_url(); ?>administration/achatCarte',
-        dataType:'json',
+        dataType:'html',
         data: {
             
             civilite:civilite,
