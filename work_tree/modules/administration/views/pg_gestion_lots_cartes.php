@@ -30,9 +30,7 @@
 															<thead class="thead-dark">
 																<tr>
 																	<th>#</th>
-																	<th>date commande</th>
-																	<th>quantité</th>
-																	<th>indice debut</th>
+																 debut</th>
 																	<th>indice fin</th>
                                                                     <th>Action</th>
 																</tr>
@@ -40,7 +38,9 @@
 															<tbody>
                                                                
                                                                <?php
-
+	<th>date commande</th>
+																	<th>quantité</th>
+																	<th>indice
 														             if(isset($list_appro_cartes)){
                                                                         $compt=0;
 															            foreach ($list_appro_cartes as $info) {

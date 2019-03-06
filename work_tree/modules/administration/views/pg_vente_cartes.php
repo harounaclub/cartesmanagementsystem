@@ -62,9 +62,25 @@
                                                 </div>
                                                 <div class="col-md-6">
 
-                                                <div class="form-group">
-                                                <label for="sel1">Civilité</label>
+                                                <div class="form-group" id="bl_type_client">
+                                                
+                                                        <select class="form-control" id="type_client">
+                                                            <option value="">Selectionner le type de client</option>
+                                                            <option value="particulier">Particulier</option>
+                                                            <option value="entreprise">Entreprise</option>
+                                                        </select>
+                                                </div>
+
+
+
+                                                <div class="form-group" id="bl_raison_sociale_client">
+                                                                        <input type="text" class="form-control" id="raison_sociale_client" placeholder="Entrer la raison sociale du client" value="">
+                                                                        
+                                                </div>
+
+                                                <div class="form-group" id="bl_civilite"> 
                                                 <select class="form-control" id="civilite">
+                                                <option value="">Selectionner la civilité</option>
                                                     <option value="Mr">Monsieur</option>
                                                     <option value="Mme">Madame</option>
                                                     <option value="Mlle">Mademoiselle</option>
@@ -72,19 +88,60 @@
                                                 </select>
                                                 </div> 
 
-                                                    <div class="form-group">
+                                                    <div class="form-group" id="bl_nom_prenom_client">
                                                                         <input type="text" class="form-control" id="nom_prenoms_client" placeholder="Entrer le nom et le prenoms du client" value="">
                                                                         
                                                     </div>
-                                                    <div class="form-group" >
+
+                                                    <div class="form-group" id="bl_date_naissance_client">
+                                                                        <input type="text" class="form-control" id="date_naissance_client" placeholder="Entrer la date de naissance du client" value="">
+                                                                        
+                                                    </div>
+
+                                                    <div class="form-group" id="bl_lieu_habitation_client">
+                                                       
+                                                        <select class="form-control" id="lieu_habitation_client">
+                                                            <option value="">Selectionner le lieu d'habitation du client</option>
+                                                            <?php 
+
+                                                            if(isset($liste_lieu_habitation)){
+
+                                                                foreach($liste_lieu_habitation as $item){ 
+                                                                    
+                                                                     $id_mongo=$item["_id"];
+                                                                     foreach($id_mongo as $it){
+
+                                                                        $id_lieu=$it;
+
+                                                                     }
+                                                                    
+                                                                    ?>
+
+                                                                   
+                                                                        <option value="<?php echo $id_lieu; ?>"><?php echo ucfirst($item["denomination"]); ?></option>
+
+
+                                                               <?php }
+                                                            }
+                                                            ?>
+                                                        
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group" id="bl_profession_client">
+                                                                        <input type="text" class="form-control" id="profession_client" placeholder="Entrer la profession du client" value="">
+                                                                        
+                                                    </div> 
+                                                    <div class="form-group" id="bl_numero_telephone_mobile_client">
                                                                         <input type="text" class="form-control" id="numero_telephone_mobile_client" placeholder="Entrer le numéro de téléphone du client" value="">
                                                                         
                                                     </div>
 
-                                                    <div class="form-group" >
+                                                    <div class="form-group" id="bl_email_client">
                                                                         <input type="text" class="form-control" id="email_client" placeholder="Entrer le email du client" value="">
                                                                         
                                                     </div>
+
+                                                   
 
                                                     <div class="row" style="margin-top: 20px;">
                                                         <div class="col-md-12">
@@ -120,9 +177,55 @@ $( document ).ready(function() {
     $("#block_info_com").hide();
     $("#block_info_carte").hide();
     $(".img_loading").hide();
+
+    $("#bl_civilite").hide();
+    $("#bl_raison_sociale_client").hide();
+    $("#bl_nom_prenom_client").hide();
+    $("#bl_date_naissance_client").hide();
+    $("#bl_lieu_habitation_client").hide();
+    $("#bl_profession_client").hide();
+    $("#bl_numero_telephone_mobile_client").hide();
+    $("#bl_email_client").hide();
+    $("#btn_valider").hide();
+    
+    
+    
     
     
     console.log( "ready!" );
+});
+
+$("#type_client").change(function() {
+  
+  var type_client=$(this).val();
+
+  if(type_client == "particulier"){
+
+    $("#bl_civilite").show();
+    $("#bl_raison_sociale_client").hide();
+    $("#bl_nom_prenom_client").show();
+    $("#bl_date_naissance_client").show();
+    $("#bl_lieu_habitation_client").show();
+    $("#bl_profession_client").show();
+    $("#bl_numero_telephone_mobile_client").show();
+    $("#bl_email_client").show();
+    $("#btn_valider").show();
+
+  }else{
+
+    $("#bl_civilite").show();
+    $("#bl_raison_sociale_client").show();
+    $("#bl_nom_prenom_client").show();
+    $("#bl_date_naissance_client").show();
+    $("#bl_lieu_habitation_client").show();
+    $("#bl_profession_client").show();
+    $("#bl_numero_telephone_mobile_client").show();
+    $("#bl_email_client").show();
+    $("#btn_valider").show();
+
+
+  }
+  
 });
 
     $('#code_commercial').on('input', function(){
@@ -296,6 +399,14 @@ $( "#btn_valider" ).click(function(e) {
 
     $("#btn_valider").prop("disabled",true);
 
+    
+    var type_client=$("#type_client").val();
+    var raison_sociale_client=$("#raison_sociale_client").val();
+    var date_naissance_client=$("#date_naissance_client").val();
+    var lieu_habitation_client=$("#lieu_habitation_client").val();
+    var profession_client=$("#profession_client").val();
+    
+    
     var code_commercial=$("#code_commercial").val();
     var code_carte=$("#code_carte").val();
     var civilite=$("#civilite").val();
@@ -312,6 +423,12 @@ $( "#btn_valider" ).click(function(e) {
         dataType:'html',
         data: {
             
+            type_client:type_client,
+            raison_sociale_client:raison_sociale_client,
+            date_naissance_client:date_naissance_client,
+            lieu_habitation_client:lieu_habitation_client,
+            profession_client:profession_client,
+
             civilite:civilite,
             code_commercial:code_commercial,
             code_carte:code_carte,
@@ -322,14 +439,16 @@ $( "#btn_valider" ).click(function(e) {
         success: function(response) {
 
         console.log(response);
-
+        alert("Client enregistré avec succès");
+        $("#block_info_com").hide();
+                  $("#block_info_carte").hide();
 
         var status=response.status;
             if(status == 1){
 
                 $("#block_info_com").hide();
                   $("#block_info_carte").hide();
-                    alert("Client enregistré avec succès");
+                    
 
             }
 

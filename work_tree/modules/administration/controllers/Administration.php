@@ -344,7 +344,8 @@ class Administration extends MX_Controller {
     }
 
     function venteCarte(){
-
+        
+        $data["liste_lieu_habitation"]=$this->administration_model->mdl_listClients_lieu_Habitations();
         $data["pg_content"]="pg_vente_cartes";
         $this->load->view("main_view",$data);
 
@@ -353,22 +354,41 @@ class Administration extends MX_Controller {
 
     function achatCarte(){
 
+
         
+        $this->form_validation->set_rules('raison_sociale_client', 'raison_sociale_client', 'trim');
+        $this->form_validation->set_rules('date_naissance_client', 'date_naissance_client', 'trim');
+        $this->form_validation->set_rules('lieu_habitation_client', 'lieu_habitation_client', 'trim');
+        $this->form_validation->set_rules('profession_client', 'profession_client', 'trim');
+
         $this->form_validation->set_rules('civilite', 'civilite', 'trim|required');
         $this->form_validation->set_rules('code_commercial', 'code commercial', 'trim|required');
+
+        $this->form_validation->set_rules('civilite', 'civilite', 'trim|required');
+        $this->form_validation->set_rules('code_commercial', 'code commercial', 'trim|required');
+
         $this->form_validation->set_rules('code_carte', 'code_carte', 'trim|required');
         $this->form_validation->set_rules('nom_prenoms_client', 'nom_prenoms_client', 'trim|required');
         $this->form_validation->set_rules('numero_telephone_mobile_client', 'numero_telephone_mobile_client', 'trim|required');
-        $this->form_validation->set_rules('email_client', 'email_client', 'trim|required');
+        $this->form_validation->set_rules('email_client', 'email_client', 'trim');
+        $this->form_validation->set_rules('type_client', 'type_client', 'trim');
         
-	      
+        
 	    if($this->form_validation->run()) 
 	    {
             
+            $raison_sociale_client=$this->input->post('raison_sociale_client');
+            $date_naissance_client=$this->input->post('date_naissance_client');
+            $lieu_habitation_client=$this->input->post('lieu_habitation_client');
+            $profession_client=$this->input->post('profession_client');
+            $type_client=$this->input->post('type_client');
+
+
             $civilite=$this->input->post('civilite');
             $code_commercial=$this->input->post('code_commercial');
             $code_carte=$this->input->post('code_carte');
             $nom_prenoms_client=$this->input->post('nom_prenoms_client');
+
             $numero_telephone_mobile_client=$this->input->post('numero_telephone_mobile_client');
             $email_client=$this->input->post('email_client');
 
@@ -380,9 +400,14 @@ class Administration extends MX_Controller {
 
                 'id_client'  => $id_client,
                 'civilite'  => $civilite,
-                'nom_prenoms_client'  => $nom_prenoms_client,            
+                'nom_prenoms_client'  => $nom_prenoms_client,  
+                'date_naissance_client'  => $date_naissance_client,
+                'lieu_habitation_client'  => $lieu_habitation_client, 
+                'profession_client'  => $profession_client,        
                 'numero_telephone_mobile_client'=> $numero_telephone_mobile_client,
-                'email_client'=> $email_client, 
+                'email_client'=> $email_client,
+                'type_client'=> $type_client,
+                'code_commercial'=> $code_commercial, 
                
             );
 
@@ -402,6 +427,13 @@ class Administration extends MX_Controller {
             }else{
 
                 $nom_complet=$civilite." ".substr($nom_prenoms_client,0,14).".";
+            }
+
+
+            if($type_client == "entreprise"){
+         
+                $nom_complet=$raison_sociale_client;
+
             }
 
             $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);

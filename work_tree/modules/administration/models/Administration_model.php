@@ -347,6 +347,26 @@ class Administration_model extends CI_Model {
   
   
       }
+
+      function mdl_listClients_lieu_Habitations()
+      {
+  
+  
+        $listlieu_habitation=$this->mongo_db->get('clients_lieu_habitation');
+        return $listlieu_habitation;
+  
+  
+      }
+
+      function mdl_listTypeClient()
+      {
+  
+  
+        $clients_type=$this->mongo_db->get('clients_type');
+        return $clients_type;
+  
+  
+      }
   
       function mdl_supprimClients($id){
   
