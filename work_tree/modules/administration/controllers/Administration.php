@@ -27,6 +27,95 @@ class Administration extends MX_Controller {
         
     }
 
+//gestion des fournisseurs
+    function gestionFournisseurs(){
+            
+        $data["list_fournisseurs"]=$this->administration_model->mdl_listFournisseur();
+        $data["pg_content"]="pg_gestion_fournisseurs";
+        $this->load->view("main_view",$data);
+    
+    }
+
+    function mdl_supprimFournisseur($id){
+        
+        if($this->administration_model->mdl_supprimFournisseur($id)){
+
+            $this->gestionFournisseurs();
+
+        }
+    
+    }
+
+    function ajoutFournisseur(){
+
+        $this->form_validation->set_rules('raison_sociale_fournisseur', 'raison_sociale_fournisseur', 'trim');
+        $this->form_validation->set_rules('pays_fournisseur', 'pays_fournisseur', 'trim');
+        $this->form_validation->set_rules('ville_fournisseur', 'ville_fournisseur', 'trim');
+        $this->form_validation->set_rules('téléphone1_fournisseur', 'téléphone1_fournisseur', 'trim');
+        $this->form_validation->set_rules('téléphone2_fournisseur', 'téléphone2_fournisseur', 'trim');
+        $this->form_validation->set_rules('email_fournisseur', 'email_fournisseur', 'trim');
+        $this->form_validation->set_rules('site_internet_fournisseur', 'site_internet_fournisseur', 'trim');
+        $this->form_validation->set_rules('commentaire_fournisseur', 'commentaire_fournisseur', 'trim');
+    
+        
+        if($this->form_validation->run()) 
+        {
+            
+            $raison_sociale_fournisseur=$this->input->post('raison_sociale_fournisseur');
+            $pays_fournisseur=$this->input->post('pays_fournisseur');
+            $ville_fournisseur=$this->input->post('ville_fournisseur');
+
+            $téléphone1_fournisseur=$this->input->post('téléphone1_fournisseur');
+            $téléphone2_fournisseur=$this->input->post('téléphone2_fournisseur');
+
+            $email_fournisseur=$this->input->post('email_fournisseur');
+            $commentaire_fournisseur=$this->input->post('commentaire_fournisseur');
+
+            
+            
+
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_fournisseur = array(
+
+                'raison_sociale_fournisseur'  => $raison_sociale_fournisseur,            
+                'pays_fournisseur'=> $pays_fournisseur,
+                'ville_fournisseur'=> $ville_fournisseur,
+                'téléphone1_fournisseur'=> $téléphone1_fournisseur,
+                'téléphone2_fournisseur'=> $téléphone2_fournisseur, 
+                'email_fournisseur'=> $email_fournisseur,
+                'commentaire_fournisseur'=> $commentaire_fournisseur, 
+
+            );
+
+
+           
+
+
+            if($this->administration_model->mdl_ajoutFournisseur($data_fournisseur)){
+
+                $this->gestionApproCartes();
+
+            }
+
+
+            
+
+                
+
+        }else
+        {
+            $data["pg_content"]="pg_gestion_fournisseur_ajout";
+            $this->load->view("main_view",$data);
+
+        }
+
+        
+    
+    }
+
 //gestion Approvisionnement cartes
     function gestionApproCartes(){
         
@@ -64,6 +153,8 @@ class Administration extends MX_Controller {
             $n_fin=$this->input->post('n_fin');
             $date_creation=date("Y-m-d h:i:sa");
 
+        
+
             $id_administrateur=$this->session->userdata('id_admin');
 
 
@@ -80,10 +171,10 @@ class Administration extends MX_Controller {
             );
 
 
-            $this->administration_model->mdl_ajoutApproCartes($data_approCarte);
+            // $this->administration_model->mdl_ajoutApproCartes($data_approCarte);
 
 
-            $this->gestionApproCartes();
+            // $this->gestionApproCartes();
 
 	               
 

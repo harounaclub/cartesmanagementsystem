@@ -16,6 +16,11 @@
 						<li class="slide">
 							<a class="side-menu__item" data-toggle="slide" href="#"><i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Logistiques</span><i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
+
+							    <li>
+									<a href="<?php echo base_url(); ?>administration/gestionFournisseurs" class="slide-item">Gestion des fournisseurs</a>
+								</li>
+
 								<li>
 									<a href="<?php echo base_url(); ?>administration/gestionApproCartes" class="slide-item">Approvisionnement cartes</a>
 								</li>

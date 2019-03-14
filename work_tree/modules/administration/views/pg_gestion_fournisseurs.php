@@ -6,7 +6,7 @@
 								<div class="btn-group mb-0">
 									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
 									<div class="dropdown-menu">
-										<a class="dropdown-item" href="<?php echo base_url(); ?>administration/ajoutCaissiere"><i class="fas fa-plus mr-2"></i>Ajouter une caissière</a>
+										<a class="dropdown-item" href="<?php echo base_url(); ?>administration/ajoutFournisseur"><i class="fas fa-plus mr-2"></i>Ajouter un fournisseur</a>
 										
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#"><i class="fas fa-cog mr-2"></i> Paramètres</a>
@@ -20,7 +20,7 @@
 								<div class="col-12">
 									<div class="card shadow bg-default">
 										<div class="card-header bg-transparent border-0">
-											<h2 class="text-white mb-0">Liste des caissières</h2>
+											<h2 class="text-white mb-0">Liste des fournisseurs</h2>
 										</div>
 										<div class="">
 											<div class="grid-margin">
@@ -30,10 +30,11 @@
 															<thead class="thead-dark">
 																<tr>
 																	<th>#</th>
-																	<th>date commande</th>
-																	<th>quantité</th>
-																	<th>indice debut</th>
-																	<th>indice fin</th>
+																	<th>Fournisseur</th>
+																	<th>Pays</th>
+																	<th>Ville </th>
+																	<th>Téléphone(s)</th>
+																	<th>Email</th>
                                                                     <th>Action</th>
 																</tr>
 															</thead>
@@ -41,29 +42,30 @@
                                                                
                                                                <?php
 	
-														             if(isset($list_appro_cartes)){
+														             if(isset($list_fournisseurs)){
                                                                         $compt=0;
-															            foreach ($list_appro_cartes as $info) {
+															            foreach ($list_fournisseurs as $info) {
 																			$compt++;
 																			
 																			foreach($info["_id"] as $value){
 
-																				$id_m_caissiere=$value;
+																				$id_m_fournisseur=$value;
 																			}
 			                                                              
 															    ?>
 
 																<tr>
 																	<td><?php echo $compt; ?></td>
-																	<td><?php if(isset($info["date_commande"])) echo $info["date_commande"]; ?></td>
-																	<td><?php if(isset($info["quantite"])) echo $info["quantite"]; ?></td>
-																	<td><?php if(isset($info["n_debut"])) echo $info["n_debut"]; ?></td>
-                                                                    <td><?php if(isset($info["n_fin"])) echo $info["n_fin"]; ?></td>
+																	<td><?php if(isset($info["raison_sociale_fournisseur"])) echo $info["raison_sociale_fournisseur"]; ?></td>
+																	<td><?php if(isset($info["pays_fournisseur"])) echo $info["pays_fournisseur"]; ?></td>
+																	<td><?php if(isset($info["ville_fournisseur"])) echo $info["ville_fournisseur"]; ?></td>
+                                                                    <td><?php if(isset($info["téléphone1_fournisseur"])) echo $info["téléphone1_fournisseur"]; ?></td>
+																	<td><?php if(isset($info["email_fournisseur"])) echo $info["email_fournisseur"]; ?></td>
 																	
 						
 																	<td class="text-nowrap">
 
-																		<a href="<?php echo base_url(); ?>administration/supprimCaissiere/<?php if(isset($id_m_caissiere)) echo $id_m_caissiere; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
+																		<a href="<?php echo base_url(); ?>administration/mdl_supprimFournisseur/<?php if(isset($id_m_fournisseur)) echo $id_m_fournisseur; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
 																	</td>
 																</tr>
 

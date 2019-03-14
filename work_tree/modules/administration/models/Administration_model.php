@@ -42,6 +42,38 @@ class Administration_model extends CI_Model {
  
     }
 
+     //gestion fournisseur
+
+     function mdl_ajoutFournisseur($data)
+     {
+ 
+         $this->mongo_db->insert('appro_fournisseurs', $data);
+         return True;
+ 
+     }
+ 
+     function mdl_listFournisseur()
+     {
+ 
+ 
+         $listApproCartes=$this->mongo_db->get('appro_fournisseurs');
+         return $listApproCartes;
+ 
+ 
+     }
+ 
+     function mdl_supprimFournisseur($id){
+ 
+ 
+        
+         $convertedid=new MongoDB\BSON\ObjectId($id);
+  
+         $this->mongo_db->where('_id',$convertedid);
+         $this->mongo_db->delete('appro_fournisseurs');
+          return TRUE;
+  
+     }
+
     //gestion ApproCartes
 
     function mdl_ajoutApproCartes($data)
