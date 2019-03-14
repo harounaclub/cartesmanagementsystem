@@ -254,6 +254,7 @@ class Administration extends MX_Controller {
             $date_expiration_annee=$this->input->post('annee_expiration');
 
             $numero_cartes=$this->input->post('numero_cartes');
+            $numero_cartes_court=substr($numero_cartes,7,15);
            
             $date_enregistrement=date("Y-m-d h:i:s");
             $status="0";
@@ -305,7 +306,8 @@ class Administration extends MX_Controller {
 
                 $data_Carte = array(
 
-                    'numero_cartes'  => (string)$numero_cartes,            
+                    'numero_cartes'  => (string)$numero_cartes,
+                    'numero_cartes_court'  => (string)$numero_cartes_court,            
                     'validite_cartes'=> $date_expiration_mois."/".$date_expiration_annee,
                     'validite_annee'=> $date_expiration_mois,
                     'validite_mois'=> $date_expiration_annee,
