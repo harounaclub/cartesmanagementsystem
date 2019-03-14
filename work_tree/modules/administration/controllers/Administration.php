@@ -233,9 +233,10 @@ class Administration extends MX_Controller {
     function ajoutCartes(){
 
         
-        $this->form_validation->set_rules('designation_lot', 'designation du lot', 'trim|required');
-        $this->form_validation->set_rules('description_lot', 'description du lot', 'trim|required');
-        $this->form_validation->set_rules('validite_cartes', 'Validité de la carte', 'trim|required');
+        $this->form_validation->set_rules('id_cmd_appro', 'id_cmd_appro', 'trim');
+        $this->form_validation->set_rules('description_lot', 'description du lot', 'trim');
+        $this->form_validation->set_rules('mois_expiration', 'mois_expiration', 'trim');
+        $this->form_validation->set_rules('annee_expiration', 'annee_expiration', 'trim');
         $this->form_validation->set_rules('int_debut', 'indice de debut', 'trim|required');
         $this->form_validation->set_rules('int_fin', 'indice de fin', 'trim|required');
         
@@ -243,12 +244,17 @@ class Administration extends MX_Controller {
 	    if($this->form_validation->run()) 
 	    {
             
-            $designation_lot=$this->input->post('designation_lot');
+    
             $description_lot=$this->input->post('description_lot');
             $id_lot=$this->administration_model->clePrimaire(10);
 
+            $id_cmd_appro=$this->input->post('id_cmd_appro');
+
+            $date_expiration_mois=$this->input->post('mois_expiration');
+            $date_expiration_annee=$this->input->post('annee_expiration');
+
             $numero_cartes=$this->input->post('numero_cartes');
-            $validite_cartes=$this->input->post('validite_cartes');
+           
             $date_enregistrement=date("Y-m-d h:i:s");
             $status="0";
             $id_client="0";
@@ -267,9 +273,10 @@ class Administration extends MX_Controller {
 
             $data_CarteLot = array(
 
-                'numero_cartes_lot'  => $numero_cartes_lot, 
-                'designation_lot'  => $designation_lot,            
+                'numero_cartes_lot'  => $numero_cartes_lot,            
                 'description_lot'=> $description_lot,
+                'date_expiration_mois_lot'=> $date_expiration_mois,
+                'date_expiration_annee_lot'=> $date_expiration_annee,
                 'date_enregistrement_lot'=> $date_enregistrement,
                 'nbre_total_cartes_lot'=> $nbre_total_cartes_lot,
                 'nbre_total_cartes_commercial'=> $nbre_init,
@@ -281,9 +288,12 @@ class Administration extends MX_Controller {
                 'nbre_total_cartes_gratuit_distribue'=> $nbre_init,
                 'nbre_total_cartes_gratuit_restantes'=> $nbre_init,
                 'status_cartes_lot'=> $nbre_init,
+                'id_cmd_appro'=> $id_cmd_appro,
                 'id_lot'=> $id_lot,    
 
             );
+
+         
 
             $this->administration_model->mdl_ajoutCartesLot($data_CarteLot);
 
@@ -296,18 +306,24 @@ class Administration extends MX_Controller {
                 $data_Carte = array(
 
                     'numero_cartes'  => (string)$numero_cartes,            
-                    'validite_cartes'=> $validite_cartes,
+                    'validite_cartes'=> $date_expiration_mois."/".$date_expiration_annee,
+                    'validite_annee'=> $date_expiration_mois,
+                    'validite_mois'=> $date_expiration_annee,
                     'mot_de_passe_cartes'=> $mot_de_passe_cartes,
                     'date_enregistrement_cartes'=> $date_enregistrement,
-                    'status_cartes'=> $status, 
+                    'status_cartes'=> $status,
+                    'status_vente'=> $nbre_init, 
                     'id_client'=> $id_client,
-                    'id_administrateur'=> $id_administrateur,
+                    'id_cmd_appro'=> $id_cmd_appro,
                     'id_lot'=> $id_lot,
+                    'id_administrateur'=> $id_administrateur,
                     
     
                 );
                 $this->administration_model->mdl_ajoutCartes($data_Carte);
                 $numero_cartes=$numero_cartes+1;
+
+                
 
 
 
@@ -316,12 +332,14 @@ class Administration extends MX_Controller {
             
 
 
-            $this->gestionCartes();
+           $this->gestionCartes();
 
 	               
 
 	    }else
 	    {
+
+            $data["list_cmdAppro"]=$this->administration_model->mdl_listApproCartes();
 	        $data["pg_content"]="pg_gestion_cartes_ajout";
             $this->load->view("main_view",$data);
 

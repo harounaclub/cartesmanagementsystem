@@ -31,7 +31,7 @@
 																<tr>
 																	<th>#</th>
 																	<th>Numéro du lot</th>
-																	<th>désignation</th>
+																	
 																	<th>date</th>		
 																	<th>Total cartes</th>
                                                                     <th>Action</th>
@@ -56,7 +56,7 @@
 																<tr>
 																	<td><?php echo $compt; ?></td>
 																	<td><?php if(isset($info["numero_cartes_lot"])) echo $info["numero_cartes_lot"]; ?></td>
-																	<td><?php if(isset($info["designation_lot"])) echo $info["designation_lot"]; ?></td>
+																
 																	<td><?php if(isset($info["date_enregistrement_lot"])) echo $info["date_enregistrement_lot"]; ?></td>
                                                                     <td><?php if(isset($info["nbre_total_cartes_lot"])) echo $info["nbre_total_cartes_lot"]; ?></td>
 																	
