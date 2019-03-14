@@ -56,8 +56,25 @@ class Administration_model extends CI_Model {
      {
  
  
-         $listApproCartes=$this->mongo_db->get('appro_fournisseurs');
-         return $listApproCartes;
+         $listFournisseur=$this->mongo_db->get('appro_fournisseurs');
+         return $listFournisseur;
+ 
+ 
+     }
+
+     function mdl_nomFournisseur($id)
+     {
+ 
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $listFournisseur=$this->mongo_db->where(array('_id' => $convertedid))->get('appro_fournisseurs');
+        
+        $nom_fournisseur="Indefinie";
+        foreach($listFournisseur as $fournisseur){
+
+            $nom_fournisseur=$fournisseur["raison_sociale_fournisseur"];
+        }
+        
+         return $nom_fournisseur;
  
  
      }
@@ -79,7 +96,7 @@ class Administration_model extends CI_Model {
     function mdl_ajoutApproCartes($data)
     {
 
-        $this->mongo_db->insert('approvisionnement_cartes', $data);
+        $this->mongo_db->insert('appro_cartes', $data);
         return True;
 
     }
@@ -88,10 +105,18 @@ class Administration_model extends CI_Model {
     {
 
 
-        $listApproCartes=$this->mongo_db->get('approvisionnement_cartes');
+        $listApproCartes=$this->mongo_db->get('appro_cartes');
         return $listApproCartes;
 
 
+    }
+
+    function mdl_compterApproCartes(){
+
+        $nb_compterApproCartess=$this->mongo_db->count('appro_cartes');
+        return $nb_compterApproCartess;
+    
+    
     }
 
     function mdl_supprimApproCartes($id){
@@ -101,7 +126,7 @@ class Administration_model extends CI_Model {
         $convertedid=new MongoDB\BSON\ObjectId($id);
  
         $this->mongo_db->where('_id',$convertedid);
-        $this->mongo_db->delete('approvisionnement_cartes');
+        $this->mongo_db->delete('appro_cartes');
          return TRUE;
  
     }

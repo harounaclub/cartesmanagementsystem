@@ -20,7 +20,7 @@
 								<div class="col-12">
 									<div class="card shadow bg-default">
 										<div class="card-header bg-transparent border-0">
-											<h2 class="text-white mb-0">Liste des caissières</h2>
+											<h2 class="text-white mb-0">Liste des approvisionnements</h2>
 										</div>
 										<div class="">
 											<div class="grid-margin">
@@ -30,10 +30,15 @@
 															<thead class="thead-dark">
 																<tr>
 																	<th>#</th>
-																	<th>date commande</th>
+																	<th>Libellé</th>
+																	<th>date Appro</th>																
+																	
+																	<th>Prem. carte</th>
+																	<th>Dern. carte</th>
+
 																	<th>quantité</th>
-																	<th>indice debut</th>
-																	<th>indice fin</th>
+
+																	<th>Fournisseur</th>
                                                                     <th>Action</th>
 																</tr>
 															</thead>
@@ -48,22 +53,28 @@
 																			
 																			foreach($info["_id"] as $value){
 
-																				$id_m_caissiere=$value;
+																				$id_m_appro=$value;
+																				
 																			}
+                                                                            $id_fournisseur_approCartes=$info["id_fournisseur_approCartes"];
+																			$fournisseur=$this->administration_model->mdl_nomFournisseur($id_fournisseur_approCartes);
 			                                                              
 															    ?>
 
 																<tr>
 																	<td><?php echo $compt; ?></td>
-																	<td><?php if(isset($info["date_commande"])) echo $info["date_commande"]; ?></td>
+																	<td><?php if(isset($info["designation_approCartes"])) echo $info["designation_approCartes"]; ?></td>
+																	<td><?php if(isset($info["date_commande_approCartes"])) echo $info["date_commande_approCartes"]; ?></td>
+																	<td><?php if(isset($info["carte_alpha_approCartes"])) echo $info["carte_alpha_approCartes"]; ?></td>
+                                                                    <td><?php if(isset($info["carte_omega_approCartes"])) echo $info["carte_omega_approCartes"]; ?></td>
+
 																	<td><?php if(isset($info["quantite"])) echo $info["quantite"]; ?></td>
-																	<td><?php if(isset($info["n_debut"])) echo $info["n_debut"]; ?></td>
-                                                                    <td><?php if(isset($info["n_fin"])) echo $info["n_fin"]; ?></td>
+																	<td><?php if(isset($fournisseur)) echo $fournisseur; ?></td>
 																	
 						
 																	<td class="text-nowrap">
 
-																		<a href="<?php echo base_url(); ?>administration/supprimCaissiere/<?php if(isset($id_m_caissiere)) echo $id_m_caissiere; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
+																		<a href="<?php echo base_url(); ?>administration/supprimApproCartes/<?php if(isset($id_m_appro)) echo $id_m_appro; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
 																	</td>
 																</tr>
 

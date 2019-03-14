@@ -6,7 +6,7 @@
 								<div class="btn-group mb-0">
 									<button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Actions</button>
 									<div class="dropdown-menu">
-										<a class="dropdown-item" href="<?php echo base_url(); ?>administration/gestionApproCartes"><i class="fas fa-eye mr-2"></i>Voir la liste des fournisseurs</a>
+										<a class="dropdown-item" href="<?php echo base_url(); ?>administration/gestionFournisseurs"><i class="fas fa-eye mr-2"></i>Voir la liste des fournisseurs</a>
 										
 										
 										<div class="dropdown-divider"></div>

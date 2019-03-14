@@ -29,8 +29,37 @@
 														<?php echo form_error('date_commande','<font color="red">','</font>'); ?>
 													</div>
 													<div class="form-group">
-														<input type="text" class="form-control" name="quantite" placeholder="Entrer la quantité de carte commandée" value="" >
-													    <?php echo form_error('quantite','<font color="red">','</font>'); ?>
+													
+														<select class="form-control select2 w-100" name="id_fournisseur">
+                                                        <option value="">Selectionner un fournisseur </option>
+
+														<?php
+	
+														             if(isset($list_fournisseurs)){
+                                                                        $compt=0;
+															            foreach ($list_fournisseurs as $info) {
+																			$compt++;
+																			
+																			foreach($info["_id"] as $value){
+
+																				$id_m_fournisseur=$value;
+
+																			?>
+
+																				<option value="<?php echo $id_m_fournisseur; ?>"><?php echo $info["raison_sociale_fournisseur"]; ?> </option>
+																			
+																			<?php
+
+																			}
+																		}
+
+																	 }
+			                                                              
+															    ?>
+                                                       
+                                                        
+                                                   
+														</select>
 													</div>
 													<div class="form-group">
 														<input type="text" class="form-control" name="n_debut" placeholder="Entrer le numero de debut" value="" >
@@ -41,8 +70,20 @@
 														<input type="text" class="form-control" name="n_fin" placeholder="Entrer le numero de fin" value="" >
 													    <?php echo form_error('n_fin','<font color="red">','</font>'); ?>
 													</div>
+
+													
 													
 												</div>
+
+												<div class="col-md-6">
+
+												<div class="form-group">
+                                                        <textarea class="form-control" name="commentaire" rows="3" placeholder="Ecriver un commentaire sur l'approvisionnement ..."></textarea>
+                                                    </div>
+
+												</div>
+
+
 											
 												<div class="col-md-12">
 													

@@ -96,7 +96,7 @@ class Administration extends MX_Controller {
 
             if($this->administration_model->mdl_ajoutFournisseur($data_fournisseur)){
 
-                $this->gestionApproCartes();
+                $this->gestionFournisseurs();
 
             }
 
@@ -127,9 +127,9 @@ class Administration extends MX_Controller {
 
     function supprimApproCartes($id){
         
-        if($this->administration_model->mdl_supprimCaissiere($id)){
+        if($this->administration_model->mdl_supprimApproCartes($id)){
 
-            $this->mdl_supprimApproCartes();
+            $this->gestionApproCartes();
 
         }
       
@@ -138,48 +138,62 @@ class Administration extends MX_Controller {
     function ajoutApproCartes(){
 
         $this->form_validation->set_rules('date_commande', 'date de la commande', 'trim|required');
-        $this->form_validation->set_rules('quantite', 'quantite de cartes commandées', 'trim|required');
         $this->form_validation->set_rules('n_debut', 'indice de cartes debut', 'trim');
         $this->form_validation->set_rules('n_fin', 'indice de cartes fin', 'trim');
+        $this->form_validation->set_rules('commentaire', 'commentaire', 'trim');
+        $this->form_validation->set_rules('id_fournisseur', 'commentaire', 'trim');
 	   
 	      
 	    if($this->form_validation->run()) 
 	    {
             
-            $date_commande=$this->input->post('date_commande');
+
+            $nb_appro=$this->administration_model->mdl_compterApproCartes();
+            $nb_appro1=$nb_appro+1;
+            $designation_approCartes="Cmd appro n°".$nb_appro1;
+            $date_commande_approCartes=$this->input->post('date_commande');
+            $date_commande_strtotime_approCartes=strtotime($date_commande_approCartes);
+            $date_creation_approCartes=date("Y-m-d h:i:sa");
+            $carte_alpha_approCartes=$this->input->post('n_debut');
+            $carte_omega_approCartes=$this->input->post('n_fin');
+            $quantite=$carte_omega_approCartes - $carte_alpha_approCartes;
+            $commentaire_approCartes=$this->input->post('commentaire');
+            $id_fournisseur_approCartes=$this->input->post('id_fournisseur');
            
-            $quantite=$this->input->post('quantite');
-            $n_debut=$this->input->post('n_debut');
-            $n_fin=$this->input->post('n_fin');
-            $date_creation=date("Y-m-d h:i:sa");
-
-        
-
             $id_administrateur=$this->session->userdata('id_admin');
 
 
 
             $data_approCarte = array(
 
-                'date_commande'  => $date_commande,            
-                'quantite'=> $quantite,
-                'n_debut'=> $n_debut,
-                'n_fin'=> $n_fin,
-                'date_creation'=> $date_creation, 
+                'designation_approCartes'  => $designation_approCartes,            
+                'date_commande_approCartes'=> $date_commande_approCartes,
+                'date_commande_strtotime_approCartes'=> $date_commande_strtotime_approCartes,
+                'date_creation_approCartes'=> $date_creation_approCartes,
+                'carte_alpha_approCartes'=> $carte_alpha_approCartes, 
+                'carte_omega_approCartes'=> $carte_omega_approCartes,
+                'quantite'=> $quantite, 
+                'commentaire_approCartes'=> $commentaire_approCartes, 
+                'id_fournisseur_approCartes'=> $id_fournisseur_approCartes, 
                 'id_administrateur'=> $id_administrateur, 
 
             );
 
+            
 
-            // $this->administration_model->mdl_ajoutApproCartes($data_approCarte);
+            if($this->administration_model->mdl_ajoutApproCartes($data_approCarte)){
+
+                $this->gestionApproCartes();
+            }
 
 
-            // $this->gestionApproCartes();
+            
 
 	               
 
 	    }else
 	    {
+            $data["list_fournisseurs"]=$this->administration_model->mdl_listFournisseur();
 	        $data["pg_content"]="pg_gestion_appro_cartes_ajout";
             $this->load->view("main_view",$data);
 
