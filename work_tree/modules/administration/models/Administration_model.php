@@ -469,6 +469,17 @@ class Administration_model extends CI_Model {
    
       }
 
+
+      function test(){
+
+
+        $num_cartes="2502181200100020";
+        echo $num_cartes;
+        echo "<br>";
+        $num_cartes_courtes=substr($num_cartes,7,15);
+        echo $num_cartes_courtes;
+      }
+
   
 
 

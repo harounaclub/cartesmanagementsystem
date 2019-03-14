@@ -254,7 +254,7 @@ class Administration extends MX_Controller {
             $date_expiration_annee=$this->input->post('annee_expiration');
 
             $numero_cartes=$this->input->post('numero_cartes');
-            $numero_cartes_court=substr($numero_cartes,7,15);
+            
            
             $date_enregistrement=date("Y-m-d h:i:s");
             $status="0";
@@ -264,7 +264,7 @@ class Administration extends MX_Controller {
             $int_debut=$this->input->post('int_debut');
             $int_fin=$this->input->post('int_fin');
 
-            $nbre_total_cartes_lot=$int_fin-$int_debut;
+            $nbre_total_cartes_lot=$int_fin-$int_debut+1;
             $total_lot=(int)$this->administration_model->mdl_compterLotCartes();
             $total_lot_plus=$total_lot+1;
 
@@ -303,11 +303,14 @@ class Administration extends MX_Controller {
             for($i=0;$i <=$nbre_total_cartes_lot; $i++){
 
                 $mot_de_passe_cartes=$this->administration_model->clePrimaireCM(4);
+                $num_carte_genere=(string)$numero_cartes;
+                $num_carte_genere_court=substr($num_carte_genere,7,15);
+
 
                 $data_Carte = array(
 
-                    'numero_cartes'  => (string)$numero_cartes,
-                    'numero_cartes_court'  => (string)$numero_cartes_court,            
+                    'numero_cartes'  => $num_carte_genere,
+                    'numero_cartes_court'  => $num_carte_genere_court,            
                     'validite_cartes'=> $date_expiration_mois."/".$date_expiration_annee,
                     'validite_annee'=> $date_expiration_mois,
                     'validite_mois'=> $date_expiration_annee,
@@ -722,6 +725,8 @@ class Administration extends MX_Controller {
         session_destroy();
         redirect("login");
     } 
+
+
 
 
 }
