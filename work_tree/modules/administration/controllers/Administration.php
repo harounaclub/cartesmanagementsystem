@@ -156,7 +156,7 @@ class Administration extends MX_Controller {
             $date_creation_approCartes=date("Y-m-d h:i:sa");
             $carte_alpha_approCartes=$this->input->post('n_debut');
             $carte_omega_approCartes=$this->input->post('n_fin');
-            $quantite=$carte_omega_approCartes - $carte_alpha_approCartes;
+            $quantite=($carte_omega_approCartes - $carte_alpha_approCartes)+1;
             $commentaire_approCartes=$this->input->post('commentaire');
             $id_fournisseur_approCartes=$this->input->post('id_fournisseur');
            
