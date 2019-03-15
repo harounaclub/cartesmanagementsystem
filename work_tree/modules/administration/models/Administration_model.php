@@ -456,6 +456,16 @@ class Administration_model extends CI_Model {
   
   
       }
+
+      function mdl_listVentesLotStatusVente($id_lot)
+      {
+  
+          $status=0;
+          $listCartes=$this->mongo_db->where(array('id_lot' => $id_lot,'status_vente' => $status))->get('cartes');
+          return $listCartes;
+  
+  
+      }
   
       function mdl_supprimVente($id){
   
@@ -470,15 +480,60 @@ class Administration_model extends CI_Model {
       }
 
 
-      function test(){
+      //affectations cartes
 
-
-        $num_cartes="2502181200100020";
-        echo $num_cartes;
-        echo "<br>";
-        $num_cartes_courtes=substr($num_cartes,7,15);
-        echo $num_cartes_courtes;
+      function mdl_listaffectationLots()
+      {
+  
+  
+          $listcartes_affectations=$this->mongo_db->get('cartes_affectations');
+          return $listcartes_affectations;
+  
+  
       }
+
+      function affectionLots($id_lot,$numero_cartes){
+
+
+        $this->mongo_db->where(array('id_lot' => $id_lot,'numero_cartes' => $numero_cartes));
+        $this->mongo_db->set(array('status_vente' => 1)); 
+        $option = array('upsert' => true);
+        $this->mongo_db->update('cartes', $option);
+
+        return TRUE;
+
+        
+      }
+
+
+     function mdl_nomLot($id)
+     {
+ 
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $infoslot=$this->mongo_db->where(array('_id' => $convertedid))->get('cartes_lot');
+        
+        $numero_cartes_lot="Indefinie";
+        foreach($infoslot as $lot){
+
+            $numero_cartes_lot=$lot["numero_cartes_lot"];
+        }
+        
+         return $numero_cartes_lot;
+ 
+ 
+     }
+
+
+      function mdl_ajoutAffection($data)
+      {
+  
+          $this->mongo_db->insert('cartes_affectations', $data);
+          return True;
+  
+      }
+
+
+      
 
   
 

@@ -265,6 +265,7 @@ class Administration extends MX_Controller {
             $int_fin=$this->input->post('int_fin');
 
             $nbre_total_cartes_lot=$int_fin-$int_debut+1;
+            $nbre_total_int=$int_fin-$int_debut;
             $total_lot=(int)$this->administration_model->mdl_compterLotCartes();
             $total_lot_plus=$total_lot+1;
 
@@ -300,7 +301,7 @@ class Administration extends MX_Controller {
 
             $numero_cartes=$int_debut;
 
-            for($i=0;$i <=$nbre_total_cartes_lot; $i++){
+            for($i=0;$i <=$nbre_total_int; $i++){
 
                 $mot_de_passe_cartes=$this->administration_model->clePrimaireCM(4);
                 $num_carte_genere=(string)$numero_cartes;
@@ -389,6 +390,136 @@ class Administration extends MX_Controller {
         $this->administration_model->mdl_modCartes($id_lot);
         $this->gestionCartesTous();
         
+    }
+
+
+    //gestion cartes affectations
+
+    function gestionCartesAffectations(){
+        
+      $data["liste_cartes_affectations"]=$this->administration_model->mdl_listaffectationLots();
+      $data["pg_content"]="pg_gestion_cartes_affectations";
+      $this->load->view("main_view",$data);
+
+
+    }
+    
+    
+
+    function gestionCartesAffectations_ajout(){
+
+        $this->form_validation->set_rules('id_lot', 'id_lot', 'trim');
+        $this->form_validation->set_rules('indice_depart', 'indice_depart', 'trim');
+        $this->form_validation->set_rules('indice_fin', 'indice_fin', 'trim');
+          
+    
+	    if($this->form_validation->run()) 
+	    {
+            
+    
+            $id_lot=$this->input->post('id_lot');
+            $indice_depart=$this->input->post('indice_depart');
+            $indice_fin=$this->input->post('indice_fin');
+            $diff=$indice_fin-$indice_depart;
+            $date=date("d-m-Y H:i:s");
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            if($id_lot <> ""){
+
+               
+                $listCartesVendable=$this->administration_model->mdl_listVentesLotStatusVente($id_lot);
+                $compt=0;
+                foreach($listCartesVendable as $info){
+                    $compt=$compt+1;
+
+                    $numero_cartes=$info["numero_cartes"];
+                    $this->administration_model->affectionLots($id_lot,$numero_cartes);
+                }
+
+
+                $data_affectations = array(
+
+                    'libelle_cartesAffectations'  => "Cartes Gratuites", 
+                    'quantite_cartesAffectations'=> $compt,           
+                    'id_lot'=> $id_lot,
+                    'carte_alpha_cartesAffectations'=> 0, 
+                    'carte_omega_cartesAffectations'=> 0, 
+                    'date_carte_alpha_cartesAffectations'=> $date,
+                    'id_administrateur'=> $id_administrateur, 
+    
+                );
+
+                if($this->administration_model->mdl_ajoutAffection($data_affectations)){
+
+                    $this->gestionCartesAffectations();
+                }
+
+               
+
+            
+
+            }else{
+
+                if($indice_depart <> "" AND $indice_fin <> ""){
+
+                    $numero_cartes=$indice_depart;
+                    $compt=0;
+                    for($i=0;$i <=$diff;$i++){
+
+                        $compt=$compt+1;
+
+                        $this->administration_model->affectionLots($id_lot,$numero_cartes);
+                        $numero_cartes=$numero_cartes+1;
+
+                    }
+
+                    $data_affectations = array(
+
+                        'libelle_cartesAffectations'  => "Cartes Gratuites", 
+                        'quantite_cartesAffectations'=> $compt,            
+                        'id_lot'=> 0,
+                        'carte_alpha_cartesAffectations'=> $indice_depart, 
+                        'carte_omega_cartesAffectations'=> $indice_fin, 
+                        'date_carte_alpha_cartesAffectations'=> $date,
+                        'id_administrateur'=> $id_administrateur, 
+        
+                    );
+    
+                    if($this->administration_model->mdl_ajoutAffection($data_affectations)){
+    
+                        $this->gestionCartesAffectations();
+                    }
+
+                    
+
+
+                }
+            }
+
+           
+
+            
+
+
+            
+            
+
+
+           
+
+	               
+
+	    }else
+	    {
+
+            
+            $data["liste_lots"]=$this->administration_model->mdl_listLotCartes();
+	        $data["pg_content"]="pg_gestion_cartes_affectations_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
     }
 
 

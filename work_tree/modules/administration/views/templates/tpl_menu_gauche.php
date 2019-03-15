@@ -27,6 +27,11 @@
 								<li>
 									<a href="<?php echo base_url(); ?>administration/gestionCartes" class="slide-item">Enregistrement lots cartes</a>
 								</li>
+
+								<li>
+									<a href="<?php echo base_url(); ?>administration/gestionCartesAffectations" class="slide-item">Affectation cartes ventes</a>
+								</li>
+
 								<li>
 									<a href="<?php echo base_url(); ?>administration/gestionCartesLot" class="slide-item">Sortie lot  de cartes</a>
 								</li>
