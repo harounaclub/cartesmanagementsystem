@@ -20,6 +20,7 @@
 															<th class="wd-15p"> date</th>
 									
 															<th class="wd-25p">Status</th>
+															
 															<th class="wd-25p">Actions</th>
 														</tr>
 
@@ -65,8 +66,9 @@
 																						<span class="badge badge-warning">hors stock</span>
                                                                                    
 																		<?php }else{ ?>
-																		           
-																						<span class="badge badge-success">Vendu</span>
+																		 
+
+																						<span class="badge badge-success"> Vendu</span>
 
 
 
@@ -79,6 +81,10 @@
 																	  
 															
 															?></td>
+
+
+															
+															
 
 
 															<td class="text-nowrap">

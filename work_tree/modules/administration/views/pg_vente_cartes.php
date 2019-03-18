@@ -22,13 +22,21 @@
 											<h2 class="mb-0">Formulaire de vente de carte PRIXKDO</h2>
 										</div>
 										<div class="card-body">
+
+                                            <!-- <div class="row">
+                                                <div class="col-md-1"></div>
+                                                <div class="alert alert-warning col-md-10" role="alert">
+                                                        <strong>Attention !</strong> Vous n'avez pas encore de caisse assignée !
+                                                    </div>
+                                                <div class="col-md-1"></div>
+                                             </div> -->
 											<div class="row">
 
                                                 <div class="col-md-4"></div>
 
                                                 <div class="col-md-4">
 
-                                                            <div class="form-group">
+                                                            <div class="form-group" id="check_code_come">
                                                                 <input type="text" class="form-control" id="code_commercial" placeholder="Entrer le code du commercial" value="">
                                                                 
                                                             </div>
@@ -141,6 +149,21 @@
                                                                         
                                                     </div>
 
+                                                    <div class="form-group" id="bl_mot_de_passe_cartes">
+                                                                        <input type="text" class="form-control" id="mot_de_passe_cartes" placeholder="Entrer le mot de passe de la carte" value="">
+                                                                        
+                                                    </div>
+
+                                                    <div class="form-group" id="bl_option_sms">
+                                                       
+                                                        <select class="form-control" id="option_sms">
+                                                            <option value="0">Envoyer le code de la carte par SMS</option>
+                                                            <option value="1">Ne pas envoyer le code de la carte par SMS</option>
+                                                            
+                                                        
+                                                        </select>
+                                                    </div>
+
                                                    
 
                                                     <div class="row" style="margin-top: 20px;">
@@ -186,6 +209,10 @@ $( document ).ready(function() {
     $("#bl_profession_client").hide();
     $("#bl_numero_telephone_mobile_client").hide();
     $("#bl_email_client").hide();
+    $("#bl_mot_de_passe_cartes").hide();
+    $("#bl_option_sms").hide();
+    
+    
     $("#btn_valider").hide();
     
     
@@ -209,6 +236,8 @@ $("#type_client").change(function() {
     $("#bl_profession_client").show();
     $("#bl_numero_telephone_mobile_client").show();
     $("#bl_email_client").show();
+    $("#bl_mot_de_passe_cartes").show();
+    $("#bl_option_sms").show();
     $("#btn_valider").show();
 
   }else{
@@ -221,6 +250,8 @@ $("#type_client").change(function() {
     $("#bl_profession_client").show();
     $("#bl_numero_telephone_mobile_client").show();
     $("#bl_email_client").show();
+    $("#bl_mot_de_passe_cartes").show();
+    $("#bl_option_sms").show();
     $("#btn_valider").show();
 
 
@@ -414,7 +445,10 @@ $( "#btn_valider" ).click(function(e) {
     var numero_telephone_mobile_client=$("#numero_telephone_mobile_client").val();
     var email_client=$("#email_client").val();
 
-    console.log(civilite);
+    var option_sms=$("#option_sms").val();
+    var mot_de_passe_cartes=$("#mot_de_passe_cartes").val();
+
+    
 
     $.ajax({
 
@@ -435,6 +469,9 @@ $( "#btn_valider" ).click(function(e) {
             nom_prenoms_client:nom_prenoms_client,
             numero_telephone_mobile_client:numero_telephone_mobile_client,
             email_client:email_client,
+
+            option_sms:option_sms,
+            mot_de_passe_cartes:mot_de_passe_cartes,
         },
         success: function(response) {
 

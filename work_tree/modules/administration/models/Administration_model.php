@@ -20,12 +20,51 @@ class Administration_model extends CI_Model {
 
     }
 
+    function mdl_infoUtilisateur($id)
+    {
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $infoAdministrateur=$this->mongo_db->where(array('_id' => $convertedid))->get('administrateur');
+        return $infoAdministrateur;
+
+    }
+
     function mdl_listUtilisateur()
     {
 
 
         $list_auteur=$this->mongo_db->get('administrateur');
         return $list_auteur;
+
+
+    }
+
+    
+    function mdl_modifierUtilisateurCaissier($cle_profils)
+    {
+
+       
+        $this->mongo_db->where(array('cle_profils'=>$cle_profils))->set('type_caissier',0)->update('administrateur');
+        return TRUE;
+
+
+    }
+
+    function mdl_modifierUtilisateurCaissierStatus($id)
+    {
+
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $this->mongo_db->where(array('_id'=>$convertedid))->set('status_caissier',1)->update('administrateur');
+        return TRUE;
+
+
+    }
+
+    function mdl_modifierUtilisateurCaissierstatus_caissier($id)
+    {
+
+       
+        $this->mongo_db->where(array('_id'=>$cle_profils))->set('status_caissier',1)->update('administrateur');
+        return TRUE;
 
 
     }
@@ -248,9 +287,23 @@ class Administration_model extends CI_Model {
 
       }
 
+      function mdl_modCartesMotdePasse($id_lot){
+
+        $this->mongo_db->where(array('status_cartes' => '0','id_lot'=>$id_lot))->set('status_cartes',1)->update('cartes');
+        return TRUE;
+
+      }
+
       function mdl_modCartesAchatStatus($numero_cartes){
 
         $this->mongo_db->where(array('numero_cartes' => $numero_cartes))->set('status_cartes',2)->update('cartes');
+        return TRUE;
+
+      }
+
+      function mdl_modCartesAchatStatusMotdePasse($numero_cartes,$mot_de_passe_cartes){
+
+        $this->mongo_db->where(array('numero_cartes' => $numero_cartes))->set('mot_de_passe_cartes',$mot_de_passe_cartes)->update('cartes');
         return TRUE;
 
       }
@@ -479,6 +532,68 @@ class Administration_model extends CI_Model {
    
       }
 
+      //gestion profils 
+
+    function mdl_ajoutadminProfil($data)
+    {
+
+        $this->mongo_db->insert('administrateur_asso_adminProfils', $data);
+        return True;
+
+    }
+
+    function mdl_listeProfilsAdmin($cle_profils)
+    {
+
+        $listProfils=$this->mongo_db->where(array('cle_profils' => $cle_profils))->get('administrateur_asso_adminProfils');
+        return $listProfils;
+
+    }
+
+
+
+      function mdl_ajoutProfils($data)
+      {
+  
+          $this->mongo_db->insert('administrateur_profils', $data);
+          return True;
+  
+      }
+  
+      function mdl_listProfils()
+      {
+  
+  
+          $listProfils=$this->mongo_db->get('administrateur_profils');
+          return $listProfils;
+  
+  
+      }
+
+      function mdl_supprimProfils($id){
+  
+  
+         
+          $convertedid=new MongoDB\BSON\ObjectId($id);
+   
+          $this->mongo_db->where('_id',$convertedid);
+          $this->mongo_db->delete('administrateur_profils');
+           return TRUE;
+   
+      }
+
+
+      //types pieces
+
+      function mdl_listTypesPieces()
+      {
+  
+          $listProfils=$this->mongo_db->get('administrateur_types_pieces');
+          return $listProfils;
+  
+  
+      }
+
 
       //affectations cartes
 
@@ -531,6 +646,186 @@ class Administration_model extends CI_Model {
           return True;
   
       }
+
+
+       //gestion caisses
+
+       function mdl_listCaisses()
+       {
+   
+           $listCaisses=$this->mongo_db->get('caisses');
+           return $listCaisses;
+   
+   
+       }
+
+       function mdl_infoCaisses($id)
+       {
+        
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+   
+         
+         $infoCaisses=$this->mongo_db->where(array('_id' => $convertedid))->get('caisses');
+         return $infoCaisses;
+   
+   
+       }
+
+       function mdl_infoCaissesCaissier($id_caissier)
+       {
+        
+ 
+         $infoCaisses=$this->mongo_db->where(array('id_caissier' => $id_caissier))->get('caisses');
+         $id_caisse="";
+         foreach($infoCaisses as $info){
+         
+            $id_mongo=$info["_id"];
+            foreach($id_mongo as $val){
+
+                $id_caisse=$val;
+            }
+
+         }
+
+         return $id_caisse;
+         
+   
+   
+    }
+
+       function mdl_nomCaissier($id)
+     {
+ 
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $listnomCaissier=$this->mongo_db->where(array('_id' => $convertedid))->get('administrateur');
+        
+        $nom_nomCaissier="Indefinie";
+        foreach($listnomCaissier as $caissier){
+
+            $nom_nomCaissier=$caissier["nom_prenoms_administrateur"];
+        }
+        
+         return $nom_nomCaissier;
+ 
+ 
+     }
+
+
+       function mdl_supprimCaisse($id){
+  
+  
+    
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+ 
+        $this->mongo_db->where('_id',$convertedid);
+        $this->mongo_db->delete('caisses');
+         return TRUE;
+ 
+        }
+
+
+        function mdl_modCaisseCaissier($id,$id_caissier){
+
+        $convertedid=new MongoDB\BSON\ObjectId($id);
+        $this->mongo_db->where(array('_id' => $convertedid))->set('id_caissier',$id_caissier)->update('caisses');
+        return TRUE;
+
+        }
+
+        
+
+        function mdl_compterCaisses(){
+
+            $nb_compterCaisses=$this->mongo_db->count('caisses');
+            return $nb_compterCaisses;
+        
+        
+        }
+
+ 
+       function mdl_ajoutCaisse($data)
+       {
+   
+           $this->mongo_db->insert('caisses', $data);
+           return True;
+   
+       }
+
+        //gestion caissier
+
+        function mdl_listCaissier()
+        {
+    
+            $status_caissier=0;
+            $list_listCaissier=$this->mongo_db->where(array('type_caissier' => $status_caissier))->get('administrateur');
+            return $list_listCaissier;
+    
+    
+        }
+
+        function mdl_listCaissierDisponible()
+        {
+    
+            $status_caissier=0;
+            $list_listCaissier=$this->mongo_db->where(array('type_caissier' => $status_caissier,'status_caissier' => 0))->get('administrateur');
+            return $list_listCaissier;
+    
+    
+        }
+ 
+ 
+        function mdl_supprimCaissier($id){
+   
+         $convertedid=new MongoDB\BSON\ObjectId($id);
+  
+         $this->mongo_db->where('_id',$convertedid);
+         $this->mongo_db->delete('caisses_caissier');
+          return TRUE;
+  
+         }
+ 
+ 
+         function mdl_modCaissier($id_lot){
+ 
+         $this->mongo_db->where(array('status_cartes' => '0','id_lot'=>$id_lot))->set('status_cartes',1)->update('cartes');
+         return TRUE;
+ 
+         }
+ 
+         function mdl_compterCaissier(){
+ 
+             $nb_compterCaisses=$this->mongo_db->count('caisses_caissier');
+             return $nb_compterCaisses;
+         
+         
+         }
+
+        //resume ventes /clients
+
+        function mdl_listVentesClients()
+        {
+    
+            
+            $list_listVente=$this->mongo_db->get('clients');
+            return $list_listVente;
+    
+    
+        }
+
+
+        function mdl_compterVenteCommercial($code_commercial){
+
+            $this->mongo_db->where('code_commercial',$code_commercial);
+            $nb_compterCaisses=$this->mongo_db->count('clients');
+            return $nb_compterCaisses;
+        
+        
+        }
+
+ 
+  
+        
+ 
 
 
       

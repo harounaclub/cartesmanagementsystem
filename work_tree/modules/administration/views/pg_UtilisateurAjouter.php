@@ -19,7 +19,7 @@
 								<div class="col-md-12">
 									<div class="card shadow">
 										<div class="card-header">
-											<h2 class="mb-0">Formulaire d'enregistrement client</h2>
+											<h2 class="mb-0">Formulaire d'enregistrement d'utillisateur</h2>
 										</div>
 										<div class="card-body">
 										 
@@ -28,19 +28,98 @@
 												<div class="row">
 													<div class="col-md-6">
 														<div class="form-group">
-															<input type="text" class="form-control" name="nom_prenoms" placeholder="Entrer le nom et prenom" value="">
-															<?php echo form_error('nom_prenoms','<font color="red">','</font>'); ?>
+															<input type="text" class="form-control" name="nom_prenoms_administrateur" placeholder="Entrer le nom et prenom de l'administrateur" value="">
+															<?php echo form_error('nom_prenoms_administrateur','<font color="red">','</font>'); ?>
 														</div>
 														<div class="form-group">
-															<input type="text" class="form-control" name="login" placeholder="Entrer le login" value="" >
-															<?php echo form_error('login','<font color="red">','</font>'); ?>
+															<input type="text" class="form-control" name="telephone_mobile_administrateur" placeholder="Entrer le numéro de téléphone mobile" value="" >
+															<?php echo form_error('telephone_mobile_administrateur','<font color="red">','</font>'); ?>
 														</div>
+
 														<div class="form-group">
-															<input type="text" class="form-control" name="password" placeholder="Entrer le mot de passe" value="" >
-															<?php echo form_error('password','<font color="red">','</font>'); ?>
+															<input type="text" class="form-control" name="email_administrateur" id="email_administrateur" placeholder="Entrer le mail de l'administrateur" value="" >
+															<?php echo form_error('email_administrateur','<font color="red">','</font>'); ?>
 														</div>
-														
+
+														<div class="form-group">
+														    <label>Login</label>
+															<input type="text" class="form-control" name="login_administrateur" id="login_administrateur" placeholder="Entrer le login de l'administrateur" value="" >
+															<?php echo form_error('login_administrateur','<font color="red">','</font>'); ?>
+														</div>
+
+													</div>	
+
+													<div class="col-md-6">
+
+													<div class="form-group">
+															
+															<select class="form-control select2 w-100" name="id_typePiece_administrateur" id="id_typePiece_administrateur" >
+																<option selected="selected" value="">Selectionner le type de pièce</option>
+																<?php
+	
+														             if(isset($list_typesPieces)){
+                                                                        $compt=0;
+															            foreach ($list_typesPieces as $info) {
+																			$compt++;
+																			
+																			foreach($info["_id"] as $value){
+
+																				$id_m_mongo=$value;
+
+																			?>
+
+																				<option value="<?php echo $id_m_mongo; ?>"><?php echo $info["libelle_typesPieces"]; ?> </option>
+																			
+																			<?php
+
+																			}
+																		}
+
+																	 }
+			                                                              
+															    ?>
+															</select>
+														</div>
+
+														<div class="form-group" id="numeroPiece_administrateur">
+															<input type="text" class="form-control" name="numeroPiece_administrateur"  placeholder="Entrer le numéro de pièce" value="" >
+															<?php echo form_error('numeroPiece_administrateur','<font color="red">','</font>'); ?>
+														</div>
+
+														<div class="form-group ">
+															
+															<select class="form-control select2 w-100" multiple="multiple" data-placeholder="Selectionner le ou les profils ..." name="profils[]">
+															<?php
+																
+																if(isset($list_profils)){
+																$compt=0;
+																foreach ($list_profils as $info) {
+																	$compt++;
+																	
+																	foreach($info["_id"] as $value){
+
+																		$id_m_mongo=$value;
+
+																	?>
+
+																		<option value="<?php echo $info["code_profils"]; ?>"><?php echo $info["libelle_profils"]; ?> </option>
+																	
+																	<?php
+
+																	}
+																}
+
+																}
+																	
+															?>
+															</select>
+														</div>
+
+													
 													</div>
+														
+														
+													
 												
 													<div class="col-md-12">
 														
@@ -70,17 +149,28 @@
 							</div>
 <!-- file uploads js -->
 <script src="<?php echo base_url(); ?>assets/administration/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/administration/plugins/fileuploads/js/dropify.min.js"></script>
-							<script>
-		$('.dropify').dropify({
-			messages: {
-				
-				'replace': 'Cliquer/déposer ou remplacer le logo',
-				'remove': 'Supprimer',
-				'error': 'Ooops, something wrong appended.'
-			},
-			error: {
-				'fileSize': 'The file size is too big (2M max).'
-			}
-		});
-	</script>
+   
+
+<script type="text/javascript">
+
+$( document ).ready(function() {
+
+  
+    console.log( "ready!" );
+});
+
+$('#email_administrateur').on('input', function(){
+
+	
+	$("#login_administrateur").empty();
+	var email=$('#email_administrateur').val();
+	$("#login_administrateur").val(email);
+
+
+
+
+
+});
+
+
+</script>

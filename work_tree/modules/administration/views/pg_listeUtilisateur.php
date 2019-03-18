@@ -33,6 +33,7 @@
 																	<th>Noms et prenoms</th>
 																	<th>login</th>
 																	<th>Mot de passe</th>
+																	<th>Profil(s)</th>
 														
 																	<th>Action</th>
 																</tr>
@@ -60,9 +61,10 @@
 
 																<tr>
 																	<td><?php echo $compt; ?></td>
-																	<td><?php if(isset($info["nom_prenoms"])) echo $info["nom_prenoms"]; ?></td>
-																	<td><?php if(isset($info["login"])) echo $info["login"]; ?></td>
-																	<td><?php if(isset($info["mot_de_passe"])) echo $info["mot_de_passe"]; ?></td>
+																	<td><?php if(isset($info["nom_prenoms_administrateur"])) echo $info["nom_prenoms_administrateur"]; ?></td>
+																	<td><?php if(isset($info["login_administrateur"])) echo $info["login_administrateur"]; ?></td>
+																	<td><?php if(isset($info["mot_de_passe_administrateur"])) echo $info["mot_de_passe_administrateur"]; ?></td>
+																	
 																	
 																	
 																	<td class="text-nowrap">

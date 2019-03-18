@@ -631,6 +631,9 @@ class Administration extends MX_Controller {
         $this->form_validation->set_rules('numero_telephone_mobile_client', 'numero_telephone_mobile_client', 'trim|required');
         $this->form_validation->set_rules('email_client', 'email_client', 'trim');
         $this->form_validation->set_rules('type_client', 'type_client', 'trim');
+        $this->form_validation->set_rules('option_sms', 'option_sms', 'trim');
+        $this->form_validation->set_rules('mot_de_passe_cartes', 'mot_de_passe_cartes', 'trim');
+        
         
         
 	    if($this->form_validation->run()) 
@@ -642,6 +645,12 @@ class Administration extends MX_Controller {
             $profession_client=$this->input->post('profession_client');
             $type_client=$this->input->post('type_client');
 
+            $option_sms=$this->input->post('option_sms');
+            $mot_de_passe_cartes=$this->input->post('mot_de_passe_cartes');
+
+            $date_achat_carte_client=date("d-m-Y");
+            $date_achat_carte_client_strtotime=strtotime($date_achat_carte_client);
+
 
             $civilite=$this->input->post('civilite');
             $code_commercial=$this->input->post('code_commercial');
@@ -651,8 +660,28 @@ class Administration extends MX_Controller {
             $numero_telephone_mobile_client=$this->input->post('numero_telephone_mobile_client');
             $email_client=$this->input->post('email_client');
 
+            $id_administrateur=$this->session->userdata('id_admin');
+            $nom_prenoms_caissier=$this->session->userdata('admin_nomPrenoms');
+            $id_caisse=$this->administration_model->mdl_infoCaissesCaissier($id_administrateur);
+            
+
 
             $id_client=$this->administration_model->clePrimaire(10);
+
+            
+
+            if($mot_de_passe_cartes <> ""){
+
+
+                $this->administration_model->mdl_modCartesAchatStatusMotdePasse($code_carte,$mot_de_passe_cartes);
+
+
+            }else{
+
+                $mot_de_passe_cartes=$this->administration_model->mdl_infoMotdepasseClient($id_client);
+
+
+            }
 
 
             $data_client = array(
@@ -666,7 +695,14 @@ class Administration extends MX_Controller {
                 'numero_telephone_mobile_client'=> $numero_telephone_mobile_client,
                 'email_client'=> $email_client,
                 'type_client'=> $type_client,
+                'numero_carte_client'=> $code_carte,
+                'mot_de_passe_carte_client'=> $mot_de_passe_cartes,
+                'date_achat_carte_client'=> $date_achat_carte_client,
+                'date_achat_carte_client_strtotime'=> $date_achat_carte_client_strtotime,
                 'code_commercial'=> $code_commercial, 
+                'id_caisse'=> $id_caisse, 
+                'id_caissier'=> $id_administrateur,
+                'nom_prenoms_caissier'=> $nom_prenoms_caissier, 
                
             );
 
@@ -674,6 +710,9 @@ class Administration extends MX_Controller {
             $this->administration_model->mdl_ajoutClient($data_client);
             $this->administration_model->mdl_modCartesAchatStatus($code_carte);
             $this->administration_model->mdl_modCartesAchatClient($code_carte,$id_client);
+
+            
+            
 
 
 
@@ -695,12 +734,20 @@ class Administration extends MX_Controller {
 
             }
 
-            $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);
-            $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
         
-        $message=urlencode("Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client");
-        $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
+            $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);
+            
+            $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
 
+        if($option_sms == 0){
+
+            $message=urlencode("Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client");
+            $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
+
+
+        }
+        
+        
             $arr = array(
                 'status' => 1,
               );
@@ -747,36 +794,79 @@ class Administration extends MX_Controller {
 
     function ajoutUtilisateur(){
 
-        $this->form_validation->set_rules('nom_prenoms', 'nom(s) et prenom(s)', 'trim|required');
-        $this->form_validation->set_rules('login', 'Mot de passe', 'trim|required');
-        $this->form_validation->set_rules('password', 'Mot de passe', 'trim|required');
+        $this->form_validation->set_rules('nom_prenoms_administrateur', 'nom_prenoms_administrateur', 'trim|required');
+        $this->form_validation->set_rules('telephone_mobile_administrateur', 'telephone_mobile_administrateur', 'trim|required');
+        $this->form_validation->set_rules('email_administrateur', 'email_administrateur', 'trim');
+        $this->form_validation->set_rules('login_administrateur', 'login_administrateur', 'trim');
+        $this->form_validation->set_rules('id_typePiece_administrateur', 'id_typePiece_administrateur', 'trim');
+        $this->form_validation->set_rules('numeroPiece_administrateur', 'numeroPiece_administrateur', 'trim');
+        $this->form_validation->set_rules('profils', 'profils', 'trim');
 	   
 	      
 	    if($this->form_validation->run()) 
 	    {
             
-            $nom_prenoms=$this->input->post('nom_prenoms');
-            $login=$this->input->post('login');
-            $password=$this->input->post('password');
+            $nom_prenoms_administrateur=$this->input->post('nom_prenoms_administrateur');
+            $telephone_mobile_administrateur=$this->input->post('telephone_mobile_administrateur');
+            $email_administrateur=$this->input->post('email_administrateur');
+            $login_administrateur=$this->input->post('login_administrateur');
+            $mot_de_passe_administrateur=$this->administration_model->clePrimaire(10);
+            $id_typePiece_administrateur=$this->input->post('id_typePiece_administrateur');
+            $numeroPiece_administrateur=$this->input->post('numeroPiece_administrateur');
+            $profils=$this->input->post('profils');
+            $cle_profils=$this->administration_model->clePrimaire(10);
+            
+          
 
             $data_utilisateur = array(
 
-                'nom_prenoms'  => $nom_prenoms,            
-                'login'=> $login,
-                'mot_de_passe'=> $password, 
-
+                'nom_prenoms_administrateur'  => $nom_prenoms_administrateur,            
+                'telephone_mobile_administrateur'=> $telephone_mobile_administrateur,
+                'email_administrateur'=> $email_administrateur, 
+                'login_administrateur'=> $login_administrateur, 
+                'mot_de_passe_administrateur'=> $mot_de_passe_administrateur, 
+                'id_typePiece_administrateur'=> $id_typePiece_administrateur,
+                'numeroPiece_administrateur'=> $numeroPiece_administrateur,
+                'cle_profils'=> $cle_profils,
+    
             );
 
+           if($this->administration_model->mdl_ajoutUtilisateur($data_utilisateur)){
 
-            $this->administration_model->mdl_ajoutUtilisateur($data_utilisateur);
+            foreach($profils as $val){
+
+                $data_asso_admin_profils = array(
+
+                    'cle_profils'  => $cle_profils,            
+                    'profil'=> $val,
+                    
+                );
+
+                if($val == "caisse"){
+
+                    $this->administration_model->mdl_modifierUtilisateurCaissier($cle_profils);
+                    $this->administration_model->mdl_modifierUtilisateurCaissierStatus($cle_profils);
+                    
+                }
+
+                $this->administration_model->mdl_ajoutadminProfil($data_asso_admin_profils);
+
+            }
+
+            $this->gestionUtilisateur();
 
 
-            print_r($data_utilisateur);
+           }
 
-	               
+
+            
+          
 
 	    }else
 	    {
+
+            $data["list_profils"]=$this->administration_model->mdl_listProfils();
+            $data["list_typesPieces"]=$this->administration_model->mdl_listTypesPieces();
 	        $data["pg_content"]="pg_UtilisateurAjouter";
             $this->load->view("main_view",$data);
 
@@ -832,6 +922,307 @@ class Administration extends MX_Controller {
         
 
     }
+
+     //gestion des profils
+
+     function gestionProfils(){
+        
+        $data["liste_profils"]=$this->administration_model->mdl_listProfils();
+        $data["pg_content"]="pg_listeProfils";
+        $this->load->view("main_view",$data);
+      
+    }
+    
+    function supprimProfils($id){
+        
+        if($this->administration_model->mdl_supprimProfils($id)){
+
+            $this->gestionProfils();
+
+        }
+      
+    }
+
+    function ajoutProfils(){
+
+        $this->form_validation->set_rules('libelle_profils', 'libelle_profils', 'trim|required');
+        $this->form_validation->set_rules('code_profils', 'code_profils', 'trim|required');
+        $this->form_validation->set_rules('commentaire_profils', 'commentaire_profils', 'trim');
+       
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+            $libelle_profils=$this->input->post('libelle_profils');
+            $code_profils=$this->input->post('code_profils');
+            $commentaire_profils=$this->input->post('commentaire_profils');
+            $date_creation_profils=date("d-m-Y");
+            $id_administrateur=$this->session->userdata('id_admin');
+            
+
+        
+            
+
+            $data_profils = array(
+
+                'libelle_profils'  => $libelle_profils,            
+                'code_profils'=> $code_profils,
+                'date_creation_profils'=> $date_creation_profils, 
+                'id_administrateur'=> $id_administrateur, 
+                'commentaire_profils'=> $commentaire_profils, 
+
+            );
+
+
+            if($this->administration_model->mdl_ajoutProfils($data_profils)){
+ 
+                $this->gestionProfils();
+
+            }
+            
+
+
+           
+
+	               
+
+	    }else
+	    {
+	        $data["pg_content"]="pg_listeProfils_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+        
+        
+      
+    }
+
+
+    //gestion des caisses
+
+    function gestionCaisses(){
+
+        $nb_caisse=$this->administration_model->mdl_compterCaisses();
+        $id_administrateur=$this->session->userdata('id_admin');
+        $date_creation_caisse=date("d-m-Y");
+
+        if($nb_caisse == 0){
+
+            $data_caisse = array(
+
+                'libelle_caisse'  => "caisse principale",            
+                'date_creation_caisse'=> $date_creation_caisse, 
+                'type_caisse'=> "caisse principale", 
+                'id_caissier'=> 0, 
+                'id_administrateur'=> $id_administrateur
+
+            );
+
+            $this->administration_model->mdl_ajoutCaisse($data_caisse);
+
+           
+        }
+
+
+
+        $data["liste_caisses"]=$this->administration_model->mdl_listCaisses();
+        $data["pg_content"]="pg_gestion_caisses";
+        $this->load->view("main_view",$data);
+
+           
+
+
+    }
+
+    function gestionCaisses_ajout(){
+
+         
+        $nb_caisse=$this->administration_model->mdl_compterCaisses();
+        $numero_caisse=$nb_caisse+1;
+
+        $libelle_caisse="Caisse n° ".$numero_caisse;
+        $id_administrateur=$this->session->userdata('id_admin');
+        $date_creation_caisse=date("d-m-Y");
+
+        
+
+            $data_caisse = array(
+
+                'libelle_caisse'  => $libelle_caisse,            
+                'date_creation_caisse'=> $date_creation_caisse, 
+                'type_caisse'=> "caisse secondaire", 
+                'id_caissier'=> 0, 
+                'id_administrateur'=> $id_administrateur
+
+            );
+
+            $this->administration_model->mdl_ajoutCaisse($data_caisse);
+
+            
+	  
+
+    }
+
+    //gestion caissier
+
+    function gestionCaissier(){
+
+        $data["liste_caissier"]=$this->administration_model->mdl_listCaissier();
+        
+        $data["pg_content"]="pg_gestionCaissier";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+    function gestionCaissier_ajout(){
+
+        $this->form_validation->set_rules('nom_prenoms_administrateur', 'nom_prenoms_administrateur', 'trim|required');
+        $this->form_validation->set_rules('telephone_mobile_administrateur', 'telephone_mobile_administrateur', 'trim|required');
+        $this->form_validation->set_rules('email_administrateur', 'email_administrateur', 'trim');
+        $this->form_validation->set_rules('login_administrateur', 'login_administrateur', 'trim');
+        $this->form_validation->set_rules('id_typePiece_administrateur', 'id_typePiece_administrateur', 'trim');
+        $this->form_validation->set_rules('numeroPiece_administrateur', 'numeroPiece_administrateur', 'trim');
+        $this->form_validation->set_rules('profils', 'profils', 'trim');
+       
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+            $nom_prenoms_administrateur=$this->input->post('nom_prenoms_administrateur');
+            $telephone_mobile_administrateur=$this->input->post('telephone_mobile_administrateur');
+            $email_administrateur=$this->input->post('email_administrateur');
+            $login_administrateur=$this->input->post('login_administrateur');
+            $mot_de_passe_administrateur=$this->administration_model->clePrimaire(10);
+            $id_typePiece_administrateur=$this->input->post('id_typePiece_administrateur');
+            $numeroPiece_administrateur=$this->input->post('numeroPiece_administrateur');
+            $profils=$this->input->post('profils');
+            $cle_profils=$this->administration_model->clePrimaire(10);
+            $status_caissier=0;
+            
+          
+
+            $data_utilisateur = array(
+
+                'nom_prenoms_administrateur'  => $nom_prenoms_administrateur,            
+                'telephone_mobile_administrateur'=> $telephone_mobile_administrateur,
+                'email_administrateur'=> $email_administrateur, 
+                'login_administrateur'=> $login_administrateur, 
+                'mot_de_passe_administrateur'=> $mot_de_passe_administrateur, 
+                'id_typePiece_administrateur'=> $id_typePiece_administrateur,
+                'numeroPiece_administrateur'=> $numeroPiece_administrateur,
+                'status_caissier'=> $status_caissier,
+                'type_caissier'=> $status_caissier,
+                'cle_profils'=> $cle_profils,
+    
+            );
+
+           if($this->administration_model->mdl_ajoutUtilisateur($data_utilisateur)){
+
+            $data_asso_admin_profils = array(
+
+                'cle_profils'  => $cle_profils,            
+                'profil'=> $profils,
+                
+            );
+
+            $this->administration_model->mdl_ajoutadminProfil($data_asso_admin_profils);
+
+            $this->gestionCaissier();
+
+
+           }
+         
+
+	    }else
+	    {
+
+            $data["list_profils"]=$this->administration_model->mdl_listProfils();
+            $data["list_typesPieces"]=$this->administration_model->mdl_listTypesPieces();
+	        $data["pg_content"]="pg_gestionCaissier_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+    }
+
+    function gestionCaissier_affectation($id_caisse){
+
+        $this->form_validation->set_rules('id_caisse', 'id_caisse', 'trim|required');
+        $this->form_validation->set_rules('id_caissier', 'caissier', 'trim|required');
+       
+       
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+            $id_caisse=$this->input->post('id_caisse');
+            $id_caissier=$this->input->post('id_caissier');
+            
+            
+            if($this->administration_model->mdl_modCaisseCaissier($id_caisse,$id_caissier)){
+
+                $this->administration_model->mdl_modifierUtilisateurCaissierStatus($id_caissier);
+                $this->gestionCaisses();
+            }
+
+
+
+	    }else
+	    {
+            
+            $data["id_caisse"]=$id_caisse;
+            $data["list_caissier"]=$this->administration_model->mdl_listCaissierDisponible();
+            $data["infoCaisse"]=$this->administration_model->mdl_infoCaisses($id_caisse);
+            $data["list_profils"]=$this->administration_model->mdl_listProfils();
+            $data["list_typesPieces"]=$this->administration_model->mdl_listTypesPieces();
+	        $data["pg_content"]="pg_gestionCaissier_affectation";
+            $this->load->view("main_view",$data);
+
+	    }
+    }
+
+    // resume des ventes
+
+    function resumeVente(){
+
+        $data["liste_vente"]=$this->administration_model->mdl_listVentesClients(); 
+        $data["pg_content"]="pg_ventesCompta";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+    function resumeCommercial(){
+
+        $data["liste_vente"]=$this->administration_model->mdl_listVentesClients(); 
+        $data["pg_content"]="pg_ventesCommercial";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+
+    function listeClients(){
+
+        $data["liste_vente"]=$this->administration_model->mdl_listVentesClients(); 
+        $data["pg_content"]="pg_ventesClients";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+    function commercialCommission(){
+
+        $data["liste_commercial"]=$this->administration_model->mdl_listCommerciaux(); 
+        $data["pg_content"]="pg_ventesCommercialCommission";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+
+
+    //Sms
 
     function envoiSmsTest(){
 

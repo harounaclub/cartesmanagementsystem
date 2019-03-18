@@ -35,7 +35,9 @@ class Login extends MX_Controller {
 
 	                       
 	                        $id_admin=$id_mAdmin;	                        
-	                        $admin_nomPrenoms=$lign["nom_prenoms_administrateur"];
+							$admin_nomPrenoms=$lign["nom_prenoms_administrateur"];
+							$admin_cle=$lign["cle_profils"];
+							
 	                       
 	                         
 	                        
@@ -47,7 +49,8 @@ class Login extends MX_Controller {
 	                    $store_data_inSession = array(
 
 	                                            'id_admin'  => $id_admin,            
-	                                            'admin_nomPrenoms'=> $admin_nomPrenoms,
+												'admin_nomPrenoms'=> $admin_nomPrenoms,
+												'admin_cle'=> $admin_cle,
 	                                                                                                             
 	                     );
 
