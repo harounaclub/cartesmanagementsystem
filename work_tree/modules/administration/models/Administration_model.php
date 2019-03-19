@@ -609,15 +609,10 @@ class Administration_model extends CI_Model {
 
       function affectionLots($id_lot,$numero_cartes){
 
-
-        $this->mongo_db->where(array('id_lot' => $id_lot,'numero_cartes' => $numero_cartes));
-        $this->mongo_db->set(array('status_vente' => 1)); 
-        $option = array('upsert' => true);
-        $this->mongo_db->update('cartes', $option);
-
+        
+        $this->mongo_db->where(array('id_lot' => $id_lot,'numero_cartes' => $numero_cartes))->set('status_vente',1)->update('cartes');
         return TRUE;
 
-        
       }
 
 
