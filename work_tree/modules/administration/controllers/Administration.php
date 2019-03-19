@@ -739,7 +739,7 @@ class Administration extends MX_Controller {
             
             $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
 
-        if($option_sms == 0){
+        if($option_sms == "0"){
 
             $token=$this->get_token();
 
@@ -747,7 +747,11 @@ class Administration extends MX_Controller {
             $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
 
 
+        }else{
+
+            echo "option envoyé sms non active";
         }
+
         
         
             $arr = array(
