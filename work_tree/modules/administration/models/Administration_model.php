@@ -767,7 +767,7 @@ class Administration_model extends CI_Model {
         {
     
             $status_caissier=0;
-            $list_listCaissier=$this->mongo_db->where(array('type_caissier' => $status_caissier,'status_caissier' => 0))->get('administrateur');
+            $list_listCaissier=$this->mongo_db->where(array('type_caissier' => $status_caissier))->get('administrateur');
             return $list_listCaissier;
     
     
