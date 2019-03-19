@@ -49,11 +49,11 @@ class Administration_model extends CI_Model {
 
     }
 
-    function mdl_modifierUtilisateurCaissierStatus($id)
+    function mdl_modifierUtilisateurCaissierStatus($cle_profils)
     {
 
-        $convertedid=new MongoDB\BSON\ObjectId($id);
-        $this->mongo_db->where(array('_id'=>$convertedid))->set('status_caissier',1)->update('administrateur');
+        
+        $this->mongo_db->where(array('cle_profils'=>$cle_profils))->set('status_caissier',1)->update('administrateur');
         return TRUE;
 
 
