@@ -1057,6 +1057,7 @@ class Administration extends MX_Controller {
             );
 
             $this->administration_model->mdl_ajoutCaisse($data_caisse);
+            header('Location: http://cartes.gloohost.net/administration/gestionCaisses'); 
 
             
 	  
