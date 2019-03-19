@@ -1231,7 +1231,7 @@ class Administration extends MX_Controller {
         $tel="54823136";
         $message="Bonjour M xxxxxxx xxxxxxxx,votre carte prixkdo n°0000 0000 0000 0000 est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : 0000 ";
         
-        $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$tel&message=$message");
+        $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$tel&message=$message");
         echo $result;
     }
 
