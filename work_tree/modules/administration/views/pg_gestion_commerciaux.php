@@ -52,7 +52,7 @@
 
 															<td class="text-nowrap">
 
-															<a href="<?php echo base_url(); ?>administration/sortieCartesLot/<?php if(isset($info["id_lot"])) echo $info["id_lot"]; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
+															<a href="<?php echo base_url(); ?>administration/supprimCommerciaux/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
 															</td>
 															</tr>
 
