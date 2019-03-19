@@ -716,7 +716,7 @@ class Administration extends MX_Controller {
 
 
 
-            $token=$this->get_token();
+            
             
             $taille_nom_prenoms=strlen($nom_prenoms_client);
             if($taille_nom_prenoms <= 16){
@@ -741,8 +741,10 @@ class Administration extends MX_Controller {
 
         if($option_sms == 0){
 
+            $token=$this->get_token();
+
             $message=urlencode("Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client");
-            $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
+            $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
 
 
         }
