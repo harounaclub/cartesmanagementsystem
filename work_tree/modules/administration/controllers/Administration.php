@@ -1238,7 +1238,7 @@ class Administration extends MX_Controller {
 
     private function get_token(){
 
-        $token=file_get_contents("http://cartes.prixkdo.local/sms/getToken.php");
+        $token=file_get_contents("http://cartes.gloohost.net/sms/getToken.php");
         return $token;
     }
 
