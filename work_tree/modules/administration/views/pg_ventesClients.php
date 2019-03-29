@@ -79,7 +79,7 @@
                                                                     <td><?php if(isset($info["date_achat_carte_client"])) echo $info["date_achat_carte_client"]; ?></td>
                                                                     <td><?php if(isset($commercial)) echo $commercial; ?></td>
 																	<td>
-																	     <a href="<?php echo base_url() ?>administration/modifierClient/<?php echo $id_mongo; ?>" type="button" class="btn btn-primary">Modifier</a>
+																	    
 																		 <a href="<?php echo base_url() ?>administration/renvoyerSmsClient/<?php echo $id_mongo; ?>" type="button" class="btn btn-primary">Renvoyer le sms</a>
 																	</td>
 																	
