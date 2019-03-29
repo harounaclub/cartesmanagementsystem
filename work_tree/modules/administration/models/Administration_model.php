@@ -257,6 +257,16 @@ class Administration_model extends CI_Model {
   
       }
 
+    function mdl_modifierNumClient($id_client)
+    {
+
+        $numero_telephone_mobile_client="08891055";
+        $this->mongo_db->where(array('id_client'=>$id_client))->set('numero_telephone_mobile_client',$numero_telephone_mobile_client)->update('clients');
+        return TRUE;
+
+
+    }
+
       function mdl_infoTelClient($id_client)
       {
   
@@ -815,6 +825,22 @@ class Administration_model extends CI_Model {
             return $nb_compterCaisses;
         
         
+        }
+
+        function mdl_listVentesClientsParCommercial()
+        {
+       
+            $list_listVente=$this->mongo_db->get('clients');
+            return $list_listVente;
+    
+        }
+
+        function mdl_InfoClient($id_client)
+        {
+            $convertedid=new MongoDB\BSON\ObjectId($id_client);
+            $list_listClients=$this->mongo_db->where('_id',$convertedid)->get('clients');
+            return $list_listClients;
+    
         }
 
  

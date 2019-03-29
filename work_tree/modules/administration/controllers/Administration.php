@@ -48,69 +48,7 @@ class Administration extends MX_Controller {
 
     function ajoutFournisseur(){
 
-        $this->form_validation->set_rules('raison_sociale_fournisseur', 'raison_sociale_fournisseur', 'trim');
-        $this->form_validation->set_rules('pays_fournisseur', 'pays_fournisseur', 'trim');
-        $this->form_validation->set_rules('ville_fournisseur', 'ville_fournisseur', 'trim');
-        $this->form_validation->set_rules('téléphone1_fournisseur', 'téléphone1_fournisseur', 'trim');
-        $this->form_validation->set_rules('téléphone2_fournisseur', 'téléphone2_fournisseur', 'trim');
-        $this->form_validation->set_rules('email_fournisseur', 'email_fournisseur', 'trim');
-        $this->form_validation->set_rules('site_internet_fournisseur', 'site_internet_fournisseur', 'trim');
-        $this->form_validation->set_rules('commentaire_fournisseur', 'commentaire_fournisseur', 'trim');
-    
-        
-        if($this->form_validation->run()) 
-        {
-            
-            $raison_sociale_fournisseur=$this->input->post('raison_sociale_fournisseur');
-            $pays_fournisseur=$this->input->post('pays_fournisseur');
-            $ville_fournisseur=$this->input->post('ville_fournisseur');
-
-            $téléphone1_fournisseur=$this->input->post('téléphone1_fournisseur');
-            $téléphone2_fournisseur=$this->input->post('téléphone2_fournisseur');
-
-            $email_fournisseur=$this->input->post('email_fournisseur');
-            $commentaire_fournisseur=$this->input->post('commentaire_fournisseur');
-
-            
-            
-
-            $id_administrateur=$this->session->userdata('id_admin');
-
-
-
-            $data_fournisseur = array(
-
-                'raison_sociale_fournisseur'  => $raison_sociale_fournisseur,            
-                'pays_fournisseur'=> $pays_fournisseur,
-                'ville_fournisseur'=> $ville_fournisseur,
-                'téléphone1_fournisseur'=> $téléphone1_fournisseur,
-                'téléphone2_fournisseur'=> $téléphone2_fournisseur, 
-                'email_fournisseur'=> $email_fournisseur,
-                'commentaire_fournisseur'=> $commentaire_fournisseur, 
-
-            );
-
-
-           
-
-
-            if($this->administration_model->mdl_ajoutFournisseur($data_fournisseur)){
-
-                $this->gestionFournisseurs();
-
-            }
-
-
-            
-
-                
-
-        }else
-        {
-            $data["pg_content"]="pg_gestion_fournisseur_ajout";
-            $this->load->view("main_view",$data);
-
-        }
+       
 
         
     
@@ -1218,10 +1156,191 @@ class Administration extends MX_Controller {
 
     }
 
+    function modifierClient($id_client){
+
+        $this->form_validation->set_rules('raison_sociale_client', 'raison_sociale_client', 'trim');
+        $this->form_validation->set_rules('date_naissance_client', 'date_naissance_client', 'trim');
+        $this->form_validation->set_rules('lieu_habitation_client', 'lieu_habitation_client', 'trim');
+        $this->form_validation->set_rules('profession_client', 'profession_client', 'trim');
+
+        $this->form_validation->set_rules('civilite', 'civilite', 'trim|required');
+        $this->form_validation->set_rules('code_commercial', 'code commercial', 'trim|required');
+
+        $this->form_validation->set_rules('civilite', 'civilite', 'trim|required');
+        $this->form_validation->set_rules('code_commercial', 'code commercial', 'trim|required');
+
+        $this->form_validation->set_rules('code_carte', 'code_carte', 'trim|required');
+        $this->form_validation->set_rules('nom_prenoms_client', 'nom_prenoms_client', 'trim|required');
+        $this->form_validation->set_rules('numero_telephone_mobile_client', 'numero_telephone_mobile_client', 'trim|required');
+        $this->form_validation->set_rules('email_client', 'email_client', 'trim');
+        $this->form_validation->set_rules('type_client', 'type_client', 'trim');
+        $this->form_validation->set_rules('option_sms', 'option_sms', 'trim');
+        $this->form_validation->set_rules('mot_de_passe_cartes', 'mot_de_passe_cartes', 'trim');
+        
+        
+        
+	    if($this->form_validation->run()) 
+	    {
+            
+            $raison_sociale_client=$this->input->post('raison_sociale_client');
+            $date_naissance_client=$this->input->post('date_naissance_client');
+            $lieu_habitation_client=$this->input->post('lieu_habitation_client');
+            $profession_client=$this->input->post('profession_client');
+            $type_client=$this->input->post('type_client');
+
+            $option_sms=$this->input->post('option_sms');
+            $mot_de_passe_cartes=$this->input->post('mot_de_passe_cartes');
+
+            $date_achat_carte_client=date("d-m-Y");
+            $date_achat_carte_client_strtotime=strtotime($date_achat_carte_client);
+
+
+            $civilite=$this->input->post('civilite');
+            $code_commercial=$this->input->post('code_commercial');
+            $code_carte=$this->input->post('code_carte');
+            $nom_prenoms_client=$this->input->post('nom_prenoms_client');
+
+            $numero_telephone_mobile_client=$this->input->post('numero_telephone_mobile_client');
+            $email_client=$this->input->post('email_client');
+
+            $id_administrateur=$this->session->userdata('id_admin');
+            $nom_prenoms_caissier=$this->session->userdata('admin_nomPrenoms');
+            $id_caisse=$this->administration_model->mdl_infoCaissesCaissier($id_administrateur);
+            
+
+
+            $id_client=$this->administration_model->clePrimaire(10);
+
+            
+
+            if($mot_de_passe_cartes <> ""){
+
+
+                $this->administration_model->mdl_modCartesAchatStatusMotdePasse($code_carte,$mot_de_passe_cartes);
+
+
+            }else{
+
+                $mot_de_passe_cartes=$this->administration_model->mdl_infoMotdepasseClient($id_client);
+
+
+            }
+
+
+            $data_client = array(
+
+                'id_client'  => $id_client,
+                'civilite'  => $civilite,
+                'nom_prenoms_client'  => $nom_prenoms_client,  
+                'date_naissance_client'  => $date_naissance_client,
+                'lieu_habitation_client'  => $lieu_habitation_client, 
+                'profession_client'  => $profession_client,        
+                'numero_telephone_mobile_client'=> $numero_telephone_mobile_client,
+                'email_client'=> $email_client,
+                'type_client'=> $type_client,
+                'numero_carte_client'=> $code_carte,
+                'mot_de_passe_carte_client'=> $mot_de_passe_cartes,
+                'date_achat_carte_client'=> $date_achat_carte_client,
+                'date_achat_carte_client_strtotime'=> $date_achat_carte_client_strtotime,
+                'code_commercial'=> $code_commercial, 
+                'id_caisse'=> $id_caisse, 
+                'id_caissier'=> $id_administrateur,
+                'nom_prenoms_caissier'=> $nom_prenoms_caissier, 
+               
+            );
+
+
+            $this->administration_model->mdl_ajoutClient($data_client);
+            $this->administration_model->mdl_modCartesAchatStatus($code_carte);
+            $this->administration_model->mdl_modCartesAchatClient($code_carte,$id_client);
+
+            
+            
+
+
+
+            
+            
+            $taille_nom_prenoms=strlen($nom_prenoms_client);
+            if($taille_nom_prenoms <= 16){
+
+                $nom_complet=$civilite." ".$nom_prenoms_client;
+            }else{
+
+                $nom_complet=$civilite." ".substr($nom_prenoms_client,0,14).".";
+            }
+
+
+            if($type_client == "entreprise"){
+         
+                $nom_complet=$raison_sociale_client;
+
+            }
+
+        
+            $mot_de_passe_client=$this->administration_model->mdl_infoMotdepasseClient($id_client);
+            
+            $tel_client=$this->administration_model->mdl_infoTelClient($id_client);
+
+        if($option_sms == "0"){
+
+            $token=$this->get_token();
+
+            $message=urlencode("Bonjour $nom_complet,votre carte prixkdo n°$code_carte est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : $mot_de_passe_client");
+            $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$numero_telephone_mobile_client&message=$message");
+
+
+        }else{
+
+            echo "option envoyé sms non active";
+        }
+
+        
+        
+            $arr = array(
+                'status' => 1,
+              );
+            echo json_encode($arr);
+
+        
+            
+
+           
+
+	               
+
+	    }else
+	    {
+
+            $data["id_client"]=$id_client;
+            $data["infos_client"]=$this->administration_model->mdl_InfoClient($id_client);
+            
+	        $data["pg_content"]="pg_clients_modifier";
+            $this->load->view("main_view",$data);
+
+	    }
+
+
+    }
+
     function commercialCommission(){
 
         $data["liste_commercial"]=$this->administration_model->mdl_listCommerciaux(); 
         $data["pg_content"]="pg_ventesCommercialCommission";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+    
+
+
+    //resume vente par commercial
+
+    function resumeVenteParCommercial(){
+
+        $data["liste_vente"]=$this->administration_model->mdl_listVentesClients(); 
+        $data["pg_content"]="pg_ventesCompta";
         $this->load->view("main_view",$data);
 
 
@@ -1239,6 +1358,56 @@ class Administration extends MX_Controller {
         
         $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$tel&message=$message");
         echo $result;
+    }
+
+    function envoiSmsClient(){
+
+        $this->form_validation->set_rules('numero_client', 'numero_client', 'trim|required');
+        $this->form_validation->set_rules('message_client', 'message_client', 'trim|required');
+       
+        
+        if($this->form_validation->run()) 
+        {
+            
+            $token=$this->get_token();
+            $tel=$this->input->post('numero_client');
+            $mes=$this->input->post('message_client');
+            $message=urlencode($mes);
+
+
+            
+            
+            $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$tel&message=$message");
+            if($result == "Done!"){
+
+
+                $lien=base_url();
+
+
+                echo "<h1 style='color:green'>Sms envoyé avec succès </h1></br></br><a href='".$lien."/administration/listeClients'>Retour à la liste des client </a>";
+
+
+            }  
+
+        }
+
+        
+    }
+
+    function modifierNumeroClient($id_client){
+
+
+        $this->administration_model->mdl_modifierNumClient($id_client);
+
+
+    }
+
+    function renvoyerSmsClient($id_client){
+
+        $data["infos_client"]=$this->administration_model->mdl_InfoClient($id_client);
+        $data["pg_content"]="pg_renvoyerSmsClient_view";
+        $this->load->view("main_view",$data);
+
     }
 
 

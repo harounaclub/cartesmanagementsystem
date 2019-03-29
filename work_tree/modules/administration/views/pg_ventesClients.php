@@ -1,3 +1,4 @@
+
 <div class="page-header mt-0 shadow p-3">
 								<ol class="breadcrumb mb-sm-0">
 									<li class="breadcrumb-item"><a href="#">Tableau</a></li>
@@ -36,6 +37,7 @@
                                                                     <th>date achat</th>
                                                                     
                                                                     <th>Commercial</th>
+																	<th>Action</th>
                                                                    
 																</tr>
 															</thead>
@@ -76,6 +78,10 @@
                                                                     <td><?php if(isset($info["numero_carte_client"])) echo $info["numero_carte_client"]."/".$info["mot_de_passe_carte_client"]; ?></td>
                                                                     <td><?php if(isset($info["date_achat_carte_client"])) echo $info["date_achat_carte_client"]; ?></td>
                                                                     <td><?php if(isset($commercial)) echo $commercial; ?></td>
+																	<td>
+																	     <a href="<?php echo base_url() ?>administration/modifierClient/<?php echo $id_mongo; ?>" type="button" class="btn btn-primary">Modifier</a>
+																		 <a href="<?php echo base_url() ?>administration/renvoyerSmsClient/<?php echo $id_mongo; ?>" type="button" class="btn btn-primary">Renvoyer le sms</a>
+																	</td>
 																	
 																	
 																	

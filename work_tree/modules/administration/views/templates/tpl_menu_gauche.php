@@ -193,17 +193,17 @@ foreach($listeProfils as $infoProfil){
 							<i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li>
-									<a href="<?php echo base_url(); ?>administration/venteCarte" class="slide-item">Mes Ventes</a>
+									<a href="#" class="slide-item">Mes Ventes</a>
 								</li>
 
 								<li>
-									<a href="<?php echo base_url(); ?>administration/gestionCommerciaux" class="slide-item">Mes Clients</a>
+									<a href="#" class="slide-item">Mes Clients</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url(); ?>administration/infosGenerales" class="slide-item">Mes Commissions</a>
+									<a href="#" class="slide-item">Mes Commissions</a>
 								</li>
 								<li>
-									<a href="<?php echo base_url(); ?>administration/infosGenerales" class="slide-item">Mes Paiements Reçus</a>
+									<a href="#" class="slide-item">Mes Paiements Reçus</a>
 								</li>
 	
 							</ul>
@@ -227,11 +227,11 @@ foreach($listeProfils as $infoProfil){
 							<i class="angle fa fa-angle-right"></i></a>
 							<ul class="slide-menu">
 								<li>
-									<a href="<?php echo base_url(); ?>administration/venteCarte" class="slide-item">SMS</a>
+									<a href="#" class="slide-item">SMS</a>
 								</li>
 
 								<li>
-									<a href="<?php echo base_url(); ?>administration/gestionCommerciaux" class="slide-item">E-mail</a>
+									<a href="#" class="slide-item">E-mail</a>
 								</li>
 							
 	
