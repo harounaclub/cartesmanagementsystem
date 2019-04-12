@@ -244,7 +244,44 @@ foreach($listeProfils as $infoProfil){
 
 					
 
-                       <!--Menu informatique debut-->
+                       <!--Menu Marketing debut-->
+
+					   <!--Menu Vitrine debut-->
+
+						<?php
+
+						if (in_array("animateur-vitrine", $listeProfil) || in_array("super-admin", $listeProfil)) { ?>
+
+						<li class="slide">
+							<a class="side-menu__item" data-toggle="slide" href="#">
+							<i class="side-menu__icon fe fe-grid"></i><span class="side-menu__label">Vitrine PrixKDO</span>
+							<i class="angle fa fa-angle-right"></i></a>
+							<ul class="slide-menu">
+								<li>
+									<a href="<?php echo base_url(); ?>administration/gestionVilles" class="slide-item">Gestion des villes</a>
+								</li>
+
+								<li>
+									<a href="<?php echo base_url(); ?>administration/gestionCategoriesPartenaires" class="slide-item">Gestion des categories</a>
+								</li>
+
+								<li>
+									<a href="<?php echo base_url(); ?>administration/gestionPartenaires" class="slide-item">Gestion des partenaires</a>
+								</li>
+							
+
+							</ul>
+						</li>
+
+						<?php
+							}
+						?>
+
+
+
+					<!--Menu vitrine debut-->
+
+
 
 						<?php
 

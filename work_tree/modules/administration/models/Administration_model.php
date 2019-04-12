@@ -843,6 +843,69 @@ class Administration_model extends CI_Model {
     
         }
 
+
+        //Ville vitrine
+
+        function mdl_listvilles()
+        {
+
+
+            $listApproCartes=$this->mongo_db->get('vitrine_ville');
+            return $listApproCartes;
+
+
+        }
+
+        function mdl_ajoutVilleVitrine($data)
+        {
+    
+            $this->mongo_db->insert('vitrine_ville', $data);
+            return True;
+    
+        }
+
+        //categories vitrine
+
+        function mdl_listCategories()
+        {
+
+
+            $listApproCartes=$this->mongo_db->get('vitrine_categorie');
+            return $listApproCartes;
+
+
+        }
+
+        function mdl_ajoutVilleCategorie($data)
+        {
+    
+            $this->mongo_db->insert('vitrine_categorie', $data);
+            return True;
+    
+        }
+
+         //partenaires vitrine
+
+         function mdl_listPartenaires()
+         {
+ 
+ 
+             $listApproCartes=$this->mongo_db->get('vitrine_partenaire');
+             return $listApproCartes;
+ 
+ 
+         }
+ 
+         function mdl_ajoutPartenaire($data)
+         {
+     
+             $this->mongo_db->insert('vitrine_partenaire', $data);
+             return True;
+     
+         }
+
+
+
  
   
         

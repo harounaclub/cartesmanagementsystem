@@ -1411,6 +1411,257 @@ class Administration extends MX_Controller {
     }
 
 
+    //gestion de la vitrine
+
+    //gestion des villes
+
+    function gestionVilles(){
+        
+        $data["list_villes"]=$this->administration_model->mdl_listvilles();
+        $data["pg_content"]="pg_gestion_villes";
+        $this->load->view("main_view",$data);
+       
+    }
+
+    function supprimVilles($id){
+        
+        if($this->administration_model->mdl_supprimApproCartes($id)){
+
+            $this->gestionApproCartes();
+
+        }
+      
+    }
+
+    function ajoutVille(){
+
+        $this->form_validation->set_rules('vitrine_ville', 'ville', 'trim|required');
+        $this->form_validation->set_rules('descriptionVille_vitrine', 'descriptionVille_vitrine', 'trim');
+       
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+
+            
+            $vitrine_ville=$this->input->post('vitrine_ville');
+            $descriptionVille_vitrine=$this->input->post('descriptionVille_vitrine');
+            $dateCreation_vitrine=date("d-m-Y");
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_ville = array(
+
+                'vitrine_ville'  => $vitrine_ville,            
+                'descriptionVille_vitrine'=> $descriptionVille_vitrine,
+                'dateCreation_vitrine'=> $dateCreation_vitrine,
+                'id_administrateur'=> $id_administrateur, 
+
+            );
+
+            
+
+            if($this->administration_model->mdl_ajoutVilleVitrine($data_ville)){
+
+                $this->gestionVilles();
+            }
+
+
+            
+
+	               
+
+	    }else
+	    {
+            
+	        $data["pg_content"]="pg_gestion_villes_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+
+        
+      
+    }
+
+    //gestion des categories
+
+    function gestionCategoriesPartenaires(){
+        
+        $data["list_categories"]=$this->administration_model->mdl_listCategories();
+        $data["pg_content"]="pg_gestion_categories";
+        $this->load->view("main_view",$data);
+       
+    }
+
+    function supprimCategoriesPartenaires($id){
+        
+        if($this->administration_model->mdl_supprimApproCartes($id)){
+
+            $this->gestionApproCartes();
+
+        }
+      
+    }
+
+    function ajoutCategoriesPartenaire(){
+
+        $this->form_validation->set_rules('categorie_vitrine', 'categories', 'trim|required');
+        $this->form_validation->set_rules('categoriedescription_vitrine', 'categorie description vitrine', 'trim');
+      
+	   
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+
+            $categorie_vitrine=$this->input->post('categorie_vitrine');
+            $categorieDescription_vitrine=$this->input->post('categoriedescription_vitrine');
+            $dateCreation_vitrine=date("d-m-Y");
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_categories = array(
+
+                'categorie_vitrine'  => $categorie_vitrine,            
+                'categorieDescription_vitrine'=> $categorieDescription_vitrine,
+                'dateCreation_vitrine'=> $dateCreation_vitrine,
+                'id_administrateur'=> $id_administrateur, 
+
+            );
+
+            
+
+            if($this->administration_model->mdl_ajoutVilleCategorie($data_categories)){
+
+                $this->gestionCategoriesPartenaires();
+            }
+
+
+
+            
+
+	               
+
+	    }else
+	    {
+           
+	        $data["pg_content"]="pg_gestion_categories_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+
+        
+      
+    }
+
+    //gestion partenaires
+
+    function gestionPartenaires(){
+        
+        $data["list_partenaires"]=$this->administration_model->mdl_listPartenaires();
+        $data["pg_content"]="pg_gestion_partenaires";
+        $this->load->view("main_view",$data);
+       
+    }
+
+    function supprimPartenaires($id){
+        
+        if($this->administration_model->mdl_supprimApproCartes($id)){
+
+            $this->gestionApproCartes();
+
+        }
+      
+    }
+
+    function ajoutPartenaire(){
+
+        $this->form_validation->set_rules('partenaireNom_vitrine', 'nom du partenaire', 'trim|required');
+        $this->form_validation->set_rules('partenaireLocalisation_vitrine', 'localisation du partenaire', 'trim|required');
+        $this->form_validation->set_rules('partenaireHoraire_vitrine', 'horaires du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireTelephone_vitrine', 'telephone', 'trim|required');
+        $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim|required');
+        $this->form_validation->set_rules('partenaireEmail_vitrine', 'mail', 'trim');
+        $this->form_validation->set_rules('partenaireSiteWeb_vitrine', 'site web', 'trim');
+        $this->form_validation->set_rules('partenaireLongititude_vitrine', 'longititude', 'trim');
+        $this->form_validation->set_rules('partenaireLattitude_vitrine', 'lattitude', 'trim');
+        $this->form_validation->set_rules('id_categorie', 'categorie', 'trim|required');
+        $this->form_validation->set_rules('id_ville', 'ville', 'trim|required');
+        
+
+	   
+	      
+	    if($this->form_validation->run()) 
+	    {
+         
+            $partenaireNom_vitrine=$this->input->post('partenaireNom_vitrine');
+            $partenaireLocalisation_vitrine=$this->input->post('partenaireLocalisation_vitrine');
+            $partenaireHoraire_vitrine=$this->input->post('partenaireHoraire_vitrine');
+            $partenaireTelephone_vitrine=$this->input->post('partenaireTelephone_vitrine');
+            $partenaireTelephone_mobile_vitrine=$this->input->post('partenaireTelephone_mobile_vitrine');
+            $partenaireEmail_vitrine=$this->input->post('partenaireEmail_vitrine');
+            $partenaireSiteWeb_vitrine=$this->input->post('partenaireSiteWeb_vitrine');
+            $partenaireLongititude_vitrine=$this->input->post('partenaireLongititude_vitrine');
+            $partenaireLattitude_vitrine=$this->input->post('partenaireLattitude_vitrine');
+            $id_categorie=$this->input->post('id_categorie');
+            $id_ville=$this->input->post('id_ville');
+            $dateCreation_vitrine=date("d-m-Y");
+            $partenaire_status=1;
+
+          
+           
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_partenaire = array(
+
+                'partenaireNom_vitrine'  => $partenaireNom_vitrine,            
+                'partenaireLocalisation_vitrine'=> $partenaireLocalisation_vitrine,
+                'partenaireHoraire_vitrine'=> $partenaireHoraire_vitrine,
+                'partenaireTelephone_vitrine'=> $partenaireTelephone_vitrine, 
+                'partenaireTelephone_mobile_vitrine'=> $partenaireTelephone_mobile_vitrine, 
+                'partenaireEmail_vitrine'=> $partenaireEmail_vitrine, 
+                'partenaireSiteWeb_vitrine'=> $partenaireSiteWeb_vitrine, 
+                'partenaireLongititude_vitrine'=> $partenaireLongititude_vitrine, 
+                'partenaireLattitude_vitrine'=> $partenaireLattitude_vitrine,
+                'dateCreation_vitrine'=> $dateCreation_vitrine,
+                'id_categorie'=> $id_categorie,
+                'partenaire_status'=> $partenaire_status,
+                'id_ville'=> $id_ville,
+
+                'id_administrateur'=> $id_administrateur, 
+
+            );
+
+            
+
+            if($this->administration_model->mdl_ajoutPartenaire($data_partenaire)){
+
+                $this->gestionPartenaires();
+            }
+
+
+            
+
+	               
+
+	    }else
+	    {
+            $data["list_villes"]=$this->administration_model->mdl_listvilles();
+            $data["list_categories"]=$this->administration_model->mdl_listCategories();
+	        $data["pg_content"]="pg_gestion_partenaires_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+
+        
+      
+    }
+
+
     private function get_token(){
 
         $token=file_get_contents("http://cartes.gloohost.net/sms/getToken.php");
