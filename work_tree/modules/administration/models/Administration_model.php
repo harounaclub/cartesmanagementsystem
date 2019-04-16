@@ -904,6 +904,32 @@ class Administration_model extends CI_Model {
      
          }
 
+         function mdl_ajoutPartenaireLogo($data)
+         {
+     
+             $this->mongo_db->insert('vitrine_partenaire_logo', $data);
+             return True;
+     
+         }
+
+         function mdl_ajoutPartenaireImages($data)
+         {
+     
+             $this->mongo_db->insert('vitrine_partenaire_images', $data);
+             return True;
+     
+         }
+
+         function mdl_supprimPartenaire($id){
+        
+            $convertedid=new MongoDB\BSON\ObjectId($id);
+     
+            $this->mongo_db->where('_id',$convertedid);
+            $this->mongo_db->delete('vitrine_partenaire');
+             return TRUE;
+     
+        }
+
 
 
  
@@ -937,6 +963,8 @@ class Administration_model extends CI_Model {
     return substr(str_shuffle($chars),0,$taille);
 
    }
+
+  
 
 
   

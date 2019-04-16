@@ -14,6 +14,51 @@
 									</div>
 								</div>
 </div>
+
+<div class="row" style="background-color:white; padding:10px;">
+					<div class="col-xl-4">
+						<section class="hk-sec-wrapper">
+							<h5 class="hk-sec-title">Uploader le logo</h5>
+							<p class="mb-40">cliquer ou deposer le logo.</p>
+							<div  class="row">
+								<div class="col-sm">
+									<form action="<?php echo base_url(); ?>administration/upload_logo" method ="POST" class="dropzone" >
+										<div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                            
+                 
+                                        </div>
+                                        <input class="form-control" id="cle_image" name="cle_image"  type="hidden" value="<?php if(isset($cle_image)) echo $cle_image;?>">
+									</form>
+								</div>
+							</div>
+						</section>
+						
+                    </div>
+
+					<div class="col-xl-7">
+						<section class="hk-sec-wrapper">
+							<h5 class="hk-sec-title">Uploader les images du partenaire</h5>
+							<p class="mb-40">cliquer ou deposer les images.</p>
+							<div  class="row">
+								<div class="col-sm">
+									<form action="<?php echo base_url(); ?>administration/upload_images_partenaires" method ="POST" class="dropzone" >
+										<div class="fallback">
+                                            <input name="file" type="file" multiple />
+                                            
+                 
+                                        </div>
+                                        <input class="form-control" id="cle_image" name="cle_image"  type="hidden" value="<?php if(isset($cle_image)) echo $cle_image;?>">
+									</form>
+								</div>
+							</div>
+						</section>
+						
+                    </div>		
+</div>
+
+<br>
+<br>
 							<?php echo form_open('administration/ajoutPartenaire'); ?>
 							<div class="row">
 								<div class="col-md-12">
@@ -23,6 +68,8 @@
 										</div>
 										<div class="card-body">
 											<div class="row">
+
+											<input class="form-control" id="cle_image" name="cle_image"  type="hidden" value="<?php if(isset($cle_image)) echo $cle_image;?>">
 												<div class="col-md-6">
 													<div class="form-group">
 														<input type="text" class="form-control" name="partenaireNom_vitrine" placeholder="Entrer le nom du partenaire" value="">

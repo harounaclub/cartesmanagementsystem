@@ -41,7 +41,7 @@
 	<link href="<?php echo base_url(); ?>assets/administration/plugins/toggle-sidebar/css/sidemenu.css" rel="stylesheet">
 
 	<!-- form Uploads -->
-	<link href="<?php echo base_url(); ?>assets/administration/plugins/fileuploads/css/dropify.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url(); ?>assets/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css" />
 	
 	<!--Select2 css-->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/administration/plugins/select2/select2.css">
@@ -152,6 +152,9 @@
 
 	<script src="<?php echo base_url(); ?>assets/administration/js/select2.js"></script>
 	<script src="<?php echo base_url(); ?>assets/administration/js/dashboard-sales.js"></script>
+	<script src="<?php echo base_url(); ?>assets/dropzone/dist/dropzone.js"></script>
+
+	
 
 	
 

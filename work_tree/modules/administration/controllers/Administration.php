@@ -1606,6 +1606,7 @@ class Administration extends MX_Controller {
             $partenaireLongititude_vitrine=$this->input->post('partenaireLongititude_vitrine');
             $partenaireLattitude_vitrine=$this->input->post('partenaireLattitude_vitrine');
             $id_categorie=$this->input->post('id_categorie');
+            $cle_image=$this->input->post('cle_image');
             $id_ville=$this->input->post('id_ville');
             $dateCreation_vitrine=date("d-m-Y");
             $partenaire_status=1;
@@ -1631,6 +1632,7 @@ class Administration extends MX_Controller {
                 'id_categorie'=> $id_categorie,
                 'partenaire_status'=> $partenaire_status,
                 'id_ville'=> $id_ville,
+                'cle_image'=> $cle_image,
 
                 'id_administrateur'=> $id_administrateur, 
 
@@ -1650,6 +1652,8 @@ class Administration extends MX_Controller {
 
 	    }else
 	    {
+
+            $data["cle_image"]=$this->administration_model->clePrimaire(10);
             $data["list_villes"]=$this->administration_model->mdl_listvilles();
             $data["list_categories"]=$this->administration_model->mdl_listCategories();
 	        $data["pg_content"]="pg_gestion_partenaires_ajout";
@@ -1660,6 +1664,89 @@ class Administration extends MX_Controller {
         
       
     }
+
+    //upload logo partenaire
+    public function upload_logo()
+    {
+        if (!empty($_FILES)) {
+            $targetPath = getcwd() . '/uploads/logo';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = date("Y_m_d_H_i_s_").rand();
+            $config['upload_path'] = $targetPath;
+            $config['allowed_types'] = 'jpg|png';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload('file')) {
+                $fichier = $this->upload->data();
+            }
+                        
+            $cle_image=$this->input->post('cle_image');           
+            $image_name= $fichier['file_name'];
+
+            $data_partenaire_logo = array(
+
+                'cle_image'  => $cle_image,            
+                'image'=> $image_name,
+                
+
+            );
+                        		
+			$this->administration_model->mdl_ajoutPartenaireLogo($data_partenaire_logo);
+                
+        }
+    }
+    
+    public function upload_images_partenaires()
+    {
+        if (!empty($_FILES)) {
+            $targetPath = getcwd() . '/uploads/partenaires';
+            $config['allowed_types'] = 'gif|jpg|jpeg|png';
+            $config['file_name'] = date("Y_m_d_H_i_s_").rand();
+            $config['upload_path'] = $targetPath;
+            $config['allowed_types'] = 'jpg|png';
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload('file')) {
+                $fichier = $this->upload->data();
+            }
+                        
+            $cle_image=$this->input->post('cle_image');           
+            $image_name= $fichier['file_name'];
+
+            $data_partenaire_image = array(
+
+                'cle_image'  => $cle_image,            
+                'image'=> $image_name,
+                
+
+            );
+                        		
+			$this->administration_model->mdl_ajoutPartenaireImages($data_partenaire_image);
+                
+        }
+    }
+
+
+    function mdl_supprimPartenaire($id){
+        
+        if($this->administration_model->mdl_supprimPartenaire($id)){
+
+            $this->gestionPartenaires();
+
+        }
+    
+    }
+    
+
+
+
+
+
+
+
+
+
+
 
 
     private function get_token(){

@@ -51,9 +51,11 @@
 
 															<td class="text-nowrap">
 
-															<a href="<?php echo base_url(); ?>administration/supprimCommerciaux/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Ajouter photos</a>
+															
+
+															<a href="<?php echo base_url(); ?>administration/supprimCommerciaux/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Voir images</a>
                                                          
-                                                            <a href="<?php echo base_url(); ?>administration/supprimCommerciaux/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-danger mt-1 mb-1">Supprimer</a>
+                                                            <a href="<?php echo base_url(); ?>administration/mdl_supprimPartenaire/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-danger mt-1 mb-1">Supprimer</a>
 															</td>
 															</tr>
 
