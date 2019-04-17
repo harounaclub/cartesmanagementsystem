@@ -1494,6 +1494,16 @@ class Administration extends MX_Controller {
        
     }
 
+    //gestion des categories
+
+    function editerPartenaires($cle_image){
+        
+        $data["cle_image"]=$cle_image;
+        $data["pg_content"]="pg_gestion_partenaires_editer_images";
+        $this->load->view("main_view",$data);
+       
+    }
+
     function supprimCategoriesPartenaires($id){
         
         if($this->administration_model->mdl_supprimApproCartes($id)){
@@ -1580,6 +1590,7 @@ class Administration extends MX_Controller {
 
         $this->form_validation->set_rules('partenaireNom_vitrine', 'nom du partenaire', 'trim|required');
         $this->form_validation->set_rules('partenaireLocalisation_vitrine', 'localisation du partenaire', 'trim|required');
+        $this->form_validation->set_rules('partenaireReduction_vitrine', 'partenaireReduction_vitrine', 'trim|required');
         $this->form_validation->set_rules('partenaireHoraire_vitrine', 'horaires du partenaire', 'trim');
         $this->form_validation->set_rules('partenaireTelephone_vitrine', 'telephone', 'trim|required');
         $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim|required');
@@ -1589,6 +1600,9 @@ class Administration extends MX_Controller {
         $this->form_validation->set_rules('partenaireLattitude_vitrine', 'lattitude', 'trim');
         $this->form_validation->set_rules('id_categorie', 'categorie', 'trim|required');
         $this->form_validation->set_rules('id_ville', 'ville', 'trim|required');
+        $this->form_validation->set_rules('partenaireDescription_vitrine', 'partenaireDescription_vitrine', 'trim');
+        
+        
         
 
 	   
@@ -1603,11 +1617,15 @@ class Administration extends MX_Controller {
             $partenaireTelephone_mobile_vitrine=$this->input->post('partenaireTelephone_mobile_vitrine');
             $partenaireEmail_vitrine=$this->input->post('partenaireEmail_vitrine');
             $partenaireSiteWeb_vitrine=$this->input->post('partenaireSiteWeb_vitrine');
+            
+            $partenaireReduction_vitrine=$this->input->post('partenaireReduction_vitrine');
             $partenaireLongititude_vitrine=$this->input->post('partenaireLongititude_vitrine');
             $partenaireLattitude_vitrine=$this->input->post('partenaireLattitude_vitrine');
             $id_categorie=$this->input->post('id_categorie');
             $cle_image=$this->input->post('cle_image');
             $id_ville=$this->input->post('id_ville');
+            $partenaireDescription_vitrine=$this->input->post('partenaireDescription_vitrine');
+            
             $dateCreation_vitrine=date("d-m-Y");
             $partenaire_status=1;
 
@@ -1625,13 +1643,15 @@ class Administration extends MX_Controller {
                 'partenaireTelephone_vitrine'=> $partenaireTelephone_vitrine, 
                 'partenaireTelephone_mobile_vitrine'=> $partenaireTelephone_mobile_vitrine, 
                 'partenaireEmail_vitrine'=> $partenaireEmail_vitrine, 
-                'partenaireSiteWeb_vitrine'=> $partenaireSiteWeb_vitrine, 
+                'partenaireReduction_vitrine'=> $partenaireReduction_vitrine, 
+                'partenaireLongititude_vitrine'=> $partenaireLongititude_vitrine, 
                 'partenaireLongititude_vitrine'=> $partenaireLongititude_vitrine, 
                 'partenaireLattitude_vitrine'=> $partenaireLattitude_vitrine,
                 'dateCreation_vitrine'=> $dateCreation_vitrine,
                 'id_categorie'=> $id_categorie,
                 'partenaire_status'=> $partenaire_status,
                 'id_ville'=> $id_ville,
+                'partenaireDescription_vitrine'=> $partenaireDescription_vitrine,
                 'cle_image'=> $cle_image,
 
                 'id_administrateur'=> $id_administrateur, 
@@ -1685,7 +1705,8 @@ class Administration extends MX_Controller {
 
             $data_partenaire_logo = array(
 
-                'cle_image'  => $cle_image,            
+                'cle_image'  => $cle_image, 
+                'logo'  => "1",            
                 'image'=> $image_name,
                 
 
@@ -1715,7 +1736,8 @@ class Administration extends MX_Controller {
 
             $data_partenaire_image = array(
 
-                'cle_image'  => $cle_image,            
+                'cle_image'  => $cle_image,
+                'logo'  => "0",             
                 'image'=> $image_name,
                 
 

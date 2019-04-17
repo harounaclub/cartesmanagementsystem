@@ -184,6 +184,12 @@
                                                 
                                                         </select>
                                                     </div>
+
+													<div class="form-group">
+														<input type="text" class="form-control" name="partenaireReduction_vitrine" placeholder="Entrer la reduction en % du partenaire" value="" >
+													    <?php echo form_error('partenaireReduction_vitrine','<font color="red">','</font>'); ?>
+													</div>
+
                                                     <div class="form-group">
 														<input type="text" class="form-control" name="partenaireLongititude_vitrine" placeholder="Entrer la longititude" value="" >
 													    <?php echo form_error('partenaireLongititude_vitrine','<font color="red">','</font>'); ?>
@@ -191,6 +197,11 @@
                                                     <div class="form-group">
 														<input type="text" class="form-control" name="partenaireLattitude_vitrine" placeholder="Entrer la lattitude" value="" >
 													    <?php echo form_error('partenaireAltitude_vitrine','<font color="red">','</font>'); ?>
+													</div>
+
+													<div class="form-group">
+														<textarea  class="form-control" name="partenaireDescription_vitrine" placeholder="Faites la présentation du partenaire" rows="10"></textarea>
+													   
 													</div>
 
                                                  

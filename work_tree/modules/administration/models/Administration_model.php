@@ -895,6 +895,16 @@ class Administration_model extends CI_Model {
  
  
          }
+
+         function mdl_listPartenairesCleImage($cle_image)
+         {
+ 
+ 
+            $infoPartenaire=$this->mongo_db->where(array('cle_image' => $cle_image))->get('vitrine_partenaire');
+            return $infoPartenaire;
+ 
+ 
+         }
  
          function mdl_ajoutPartenaire($data)
          {
@@ -919,6 +929,26 @@ class Administration_model extends CI_Model {
              return True;
      
          }
+
+        function mdl_imageLogo($cle_image)
+        {
+    
+            
+            $image_logo=$this->mongo_db->where(array('cle_image' => $cle_image))->get('vitrine_partenaire_logo');
+            return $image_logo;
+    
+    
+        }
+
+        function mdl_ListImagesPartenairesAutres($cle_image)
+        {
+    
+            
+            $images_partenaires=$this->mongo_db->where(array('cle_image' => $cle_image))->get('vitrine_partenaire_images');
+            return $images_partenaires;
+    
+    
+        }
 
          function mdl_supprimPartenaire($id){
         
