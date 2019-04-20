@@ -17,8 +17,6 @@
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800" rel="stylesheet">
 
-
-
 	<!-- Icons -->
 	<link href="<?php echo base_url(); ?>assets/administration/css/icons.css" rel="stylesheet">
 
@@ -45,6 +43,10 @@
 	
 	<!--Select2 css-->
 	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/administration/plugins/select2/select2.css">
+	<script src="<?php echo base_url(); ?>assets/wysiwyg/tinymce/js/tinymce/tinymce.min.js"></script>
+
+
+	
 
 </head>
 <body class="app sidebar-mini rtl" >

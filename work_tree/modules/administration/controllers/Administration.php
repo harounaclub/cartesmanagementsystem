@@ -1516,6 +1516,12 @@ class Administration extends MX_Controller {
 
     function ajoutCategoriesPartenaire(){
 
+        
+        
+
+        $this->form_validation->set_rules('codecategorie_vitrine', 'codecategorie_vitrine', 'trim');
+        $this->form_validation->set_rules('iconecategorie_vitrine', 'iconecategorie_vitrine', 'trim');
+
         $this->form_validation->set_rules('categorie_vitrine', 'categories', 'trim|required');
         $this->form_validation->set_rules('categoriedescription_vitrine', 'categorie description vitrine', 'trim');
       
@@ -1525,6 +1531,9 @@ class Administration extends MX_Controller {
 	    {
             
 
+            $type_categorie=0;
+            $codecategorie_vitrine=$this->input->post('codecategorie_vitrine');
+            $iconecategorie_vitrine=$this->input->post('iconecategorie_vitrine');
             $categorie_vitrine=$this->input->post('categorie_vitrine');
             $categorieDescription_vitrine=$this->input->post('categoriedescription_vitrine');
             $dateCreation_vitrine=date("d-m-Y");
@@ -1534,6 +1543,9 @@ class Administration extends MX_Controller {
 
             $data_categories = array(
 
+                'type_categorie'  => $type_categorie,
+                'codecategorie_vitrine'  => $codecategorie_vitrine,
+                'iconecategorie_vitrine'  => $iconecategorie_vitrine,
                 'categorie_vitrine'  => $categorie_vitrine,            
                 'categorieDescription_vitrine'=> $categorieDescription_vitrine,
                 'dateCreation_vitrine'=> $dateCreation_vitrine,
@@ -1544,6 +1556,73 @@ class Administration extends MX_Controller {
             
 
             if($this->administration_model->mdl_ajoutVilleCategorie($data_categories)){
+
+                $this->gestionCategoriesPartenaires();
+            }           
+
+	    }else
+	    {
+           
+	        $data["pg_content"]="pg_gestion_categories_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+
+    }
+
+    function modifierCategoriePage($id_categorie){
+
+        $data["id_categorie"]=$id_categorie;
+        $data["info_categorie"]=$this->administration_model->mdl_listCategoriesParId($id_categorie);
+        $data["pg_content"]="pg_gestion_categories_modifier";
+        $this->load->view("main_view",$data);
+
+
+    }
+
+    function modifierCategoriesPartenaire(){
+
+        
+        $this->form_validation->set_rules('codecategorie_vitrine', 'codecategorie_vitrine', 'trim');
+        $this->form_validation->set_rules('iconecategorie_vitrine', 'iconecategorie_vitrine', 'trim');
+
+        $this->form_validation->set_rules('categorie_vitrine', 'categories', 'trim|required');
+        $this->form_validation->set_rules('categoriedescription_vitrine', 'categorie description vitrine', 'trim');
+      
+	   
+	      
+	    if($this->form_validation->run()) 
+	    {
+            
+
+            $type_categorie=$this->input->post('type_categorie');
+
+           
+            $id_categorie=$this->input->post('id_categorie');
+            $codecategorie_vitrine=$this->input->post('codecategorie_vitrine');
+            $iconecategorie_vitrine=$this->input->post('iconecategorie_vitrine');
+            $categorie_vitrine=$this->input->post('categorie_vitrine');
+            $categorieDescription_vitrine=$this->input->post('categoriedescription_vitrine');
+            $dateCreation_vitrine=date("d-m-Y");
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_categories = array(
+
+                'type_categorie'  => $type_categorie,
+                'codecategorie_vitrine'  => $codecategorie_vitrine,
+                'iconecategorie_vitrine'  => $iconecategorie_vitrine,
+                'categorie_vitrine'  => $categorie_vitrine,            
+                'categorieDescription_vitrine'=> $categorieDescription_vitrine,
+                'dateCreation_vitrine'=> $dateCreation_vitrine,
+                'id_administrateur'=> $id_administrateur, 
+
+            );
+
+            
+
+            if($this->administration_model->mdl_modifierCategorie($id_categorie,$data_categories)){
 
                 $this->gestionCategoriesPartenaires();
             }
@@ -1596,11 +1675,13 @@ class Administration extends MX_Controller {
         $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim|required');
         $this->form_validation->set_rules('partenaireEmail_vitrine', 'mail', 'trim');
         $this->form_validation->set_rules('partenaireSiteWeb_vitrine', 'site web', 'trim');
-        $this->form_validation->set_rules('partenaireLongititude_vitrine', 'longititude', 'trim');
-        $this->form_validation->set_rules('partenaireLattitude_vitrine', 'lattitude', 'trim');
+        $this->form_validation->set_rules('partenaireGoogleMaps_vitrine', 'partenaireGoogleMaps_vitrine', 'trim');
+       
         $this->form_validation->set_rules('id_categorie', 'categorie', 'trim|required');
         $this->form_validation->set_rules('id_ville', 'ville', 'trim|required');
         $this->form_validation->set_rules('partenaireDescription_vitrine', 'partenaireDescription_vitrine', 'trim');
+        $this->form_validation->set_rules('partenaireContenuDescription_vitrine', 'partenaireContenuDescription_vitrine', 'trim');
+        
         
         
         
@@ -1617,10 +1698,12 @@ class Administration extends MX_Controller {
             $partenaireTelephone_mobile_vitrine=$this->input->post('partenaireTelephone_mobile_vitrine');
             $partenaireEmail_vitrine=$this->input->post('partenaireEmail_vitrine');
             $partenaireSiteWeb_vitrine=$this->input->post('partenaireSiteWeb_vitrine');
+
+            $partenaireContenuDescription_vitrine=$this->input->post('partenaireContenuDescription_vitrine');
             
             $partenaireReduction_vitrine=$this->input->post('partenaireReduction_vitrine');
-            $partenaireLongititude_vitrine=$this->input->post('partenaireLongititude_vitrine');
-            $partenaireLattitude_vitrine=$this->input->post('partenaireLattitude_vitrine');
+            $partenaireGoogleMaps_vitrine=$this->input->post('partenaireGoogleMaps_vitrine');
+            
             $id_categorie=$this->input->post('id_categorie');
             $cle_image=$this->input->post('cle_image');
             $id_ville=$this->input->post('id_ville');
@@ -1644,14 +1727,14 @@ class Administration extends MX_Controller {
                 'partenaireTelephone_mobile_vitrine'=> $partenaireTelephone_mobile_vitrine, 
                 'partenaireEmail_vitrine'=> $partenaireEmail_vitrine, 
                 'partenaireReduction_vitrine'=> $partenaireReduction_vitrine, 
-                'partenaireLongititude_vitrine'=> $partenaireLongititude_vitrine, 
-                'partenaireLongititude_vitrine'=> $partenaireLongititude_vitrine, 
-                'partenaireLattitude_vitrine'=> $partenaireLattitude_vitrine,
+                'partenaireGoogleMaps_vitrine'=> $partenaireGoogleMaps_vitrine, 
+                
                 'dateCreation_vitrine'=> $dateCreation_vitrine,
                 'id_categorie'=> $id_categorie,
                 'partenaire_status'=> $partenaire_status,
                 'id_ville'=> $id_ville,
                 'partenaireDescription_vitrine'=> $partenaireDescription_vitrine,
+                'partenaireContenuDescription_vitrine'=> $partenaireContenuDescription_vitrine,
                 'cle_image'=> $cle_image,
 
                 'id_administrateur'=> $id_administrateur, 
@@ -1757,6 +1840,29 @@ class Administration extends MX_Controller {
 
         }
     
+    }
+
+    function mise_ajour_Categorie(){
+
+
+        $liste_categorie=$this->administration_model->mdl_listCategories();
+        foreach($liste_categorie as $categorie){
+
+            $id_mongo=$categorie["_id"];
+            foreach($id_mongo as $val){
+
+                $id_categorie=$val;
+                $this->administration_model->mdl_modifierCategorieType($id_categorie);
+            }
+
+
+
+
+        }
+
+        echo "done";
+
+
     }
     
 

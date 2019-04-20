@@ -93,21 +93,15 @@
 														<input type="text" class="form-control" name="partenaireLocalisation_vitrine" placeholder="Entrer la localisation" value="" >
 													    <?php echo form_error('partenaireLocalisation_vitrine','<font color="red">','</font>'); ?>
 													</div>
-													
-                                                    <div class="form-group">
+
+													<div class="form-group">
 														<input type="text" class="form-control" name="partenaireEmail_vitrine" placeholder="Entrer le mail" value="" >
 													    <?php echo form_error('partenaireEmail_vitrine','<font color="red">','</font>'); ?>
 													</div>
+													
+                                                   
 
-                                                    <div class="form-group">
-														<input type="text" class="form-control" name="partenaireSiteWeb_vitrine" placeholder="Entrer le site web" value="" >
-													    <?php echo form_error('partenaireSiteWeb_vitrine','<font color="red">','</font>'); ?>
-													</div>
-
-                                                    <div class="form-group">
-														<input type="text" class="form-control" name="partenaireHoraire_vitrine" placeholder="Entrer les horaires" value="" >
-													    <?php echo form_error('partenaireHoraire_vitrine','<font color="red">','</font>'); ?>
-													</div>
+                                                   
                                                     
 													
 											    </div>
@@ -190,22 +184,73 @@
 													    <?php echo form_error('partenaireReduction_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
-                                                    <div class="form-group">
-														<input type="text" class="form-control" name="partenaireLongititude_vitrine" placeholder="Entrer la longititude" value="" >
-													    <?php echo form_error('partenaireLongititude_vitrine','<font color="red">','</font>'); ?>
-													</div>
-                                                    <div class="form-group">
-														<input type="text" class="form-control" name="partenaireLattitude_vitrine" placeholder="Entrer la lattitude" value="" >
-													    <?php echo form_error('partenaireAltitude_vitrine','<font color="red">','</font>'); ?>
-													</div>
+                                                    
 
 													<div class="form-group">
-														<textarea  class="form-control" name="partenaireDescription_vitrine" placeholder="Faites la présentation du partenaire" rows="10"></textarea>
-													   
+														<input type="text" class="form-control" name="partenaireHoraire_vitrine" placeholder="Entrer les horaires" value="" >
+													    <?php echo form_error('partenaireHoraire_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
+													
+
+                                                    <div class="form-group">
+														<input type="text" class="form-control" name="partenaireSiteWeb_vitrine" placeholder="Entrer le site web" value="" >
+													    <?php echo form_error('partenaireSiteWeb_vitrine','<font color="red">','</font>'); ?>
+													</div>
+
+													
+
+													
+													 <!-- Textarea -->
+      
+
+													
                                                  
                                                 </div>
+												<div class="col-md-12">
+
+												    <div class="form-group">
+														<input type="text" class="form-control" name="partenaireGoogleMaps_vitrine" placeholder="Entrer le iframe google maps" value="" >
+													    <?php echo form_error('partenaireHoraire_vitrine','<font color="red">','</font>'); ?>
+													</div>
+												     <div class="form-group">
+														<textarea class="form-control" name="partenaireDescription_vitrine" placeholder="Entrer la courte description du commerce" rows="3"></textarea>
+													 </div>
+												</div>
+
+
+												<div class="col-md-12">
+												
+
+												    <div class="form-group">
+
+													   <textarea class='editor' name="partenaireContenuDescription_vitrine">
+
+													   <h5 class="listing-title">Nom du commerce</h5>
+                                                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque </p>
+													   <h5 class="listing-title">Offre :</h5>
+													   <ul>
+													      <li>x % de réduction ....</li>
+														  <li>x % de réduction ....</li>
+														  <li>x % de réduction ....</li>
+														  <li>x % de réduction ....</li>
+													    </ul>
+
+														<span> <b><i class="fa fa-phone" aria-hidden="true"></i>Contact :</b> 59 00 00 00 / 01 00 00 00 </span> <br>
+														<span> <b><i class="fa fa-envelope-o" aria-hidden="true"></i>Adresse :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque</span><br>
+														<span> <b>Cuisine :</b> Patisserie</span>
+													
+
+														 
+
+
+
+													  
+														
+														</textarea>
+													</div>
+
+												</div>
 
                                               
 											
@@ -232,17 +277,13 @@
 							<?php echo form_close(); ?>
 <!-- file uploads js -->
 <script src="<?php echo base_url(); ?>assets/administration/plugins/jquery/dist/jquery.min.js"></script>
-    <script src="<?php echo base_url(); ?>assets/administration/plugins/fileuploads/js/dropify.min.js"></script>
-							<script>
-		$('.dropify').dropify({
-			messages: {
-				
-				'replace': 'Cliquer/déposer ou remplacer le logo',
-				'remove': 'Supprimer',
-				'error': 'Ooops, something wrong appended.'
-			},
-			error: {
-				'fileSize': 'The file size is too big (2M max).'
-			}
-		});
-	</script>
+<!-- Script -->
+
+<script>
+    tinymce.init({ 
+      selector:'.editor',
+      theme: 'silver',
+      height: 800
+    });
+    </script>
+	

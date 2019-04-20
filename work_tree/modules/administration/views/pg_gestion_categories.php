@@ -18,8 +18,11 @@
 														<tr>
 															<th class="wd-15p">#</th>
 															<th class="wd-15p">Categorie</th>
+															<th class="wd-15p">Type de categorie</th>
+															<th class="wd-15p">code</th>
 															<th class="wd-20p">date</th>
 															<th class="wd-15p">Nbres partenaires</th>
+															<th class="wd-15p">Actions</th>
 															
 														</tr>
 
@@ -34,12 +37,33 @@
 
 																	$id=$value;
 																}
+
+																$type_categorie=$info["type_categorie"];
 																
+															
 															?>
 
 															<tr>
 															<td><?php echo $compt; ?></td>
 															<td><?php if(isset($info["categorie_vitrine"])) echo $info["categorie_vitrine"]; ?></td>
+
+															<?php
+
+																if($type_categorie == 1){ ?>
+
+
+																		<td>Categorie de base</td>
+
+																		
+															<?php }else{ ?>
+															 
+																		<td>Categorie simple</td>
+
+
+															<?php }
+															?>
+
+															<td><?php if(isset($info["codecategorie_vitrine"])) echo $info["codecategorie_vitrine"]; ?></td>
 															<td><?php if(isset($info["dateCreation_vitrine"])) echo $info["dateCreation_vitrine"]; ?></td>
 															<td>0</td>
 														
@@ -49,7 +73,19 @@
 
 															<td class="text-nowrap">
 
-															<a href="<?php echo base_url(); ?>administration/supprimCommerciaux/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Supprimer</a>
+                                                            <a href="<?php echo base_url(); ?>administration/modifierCategoriePage/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Modifer</a>
+
+																	<?php
+
+																	if($type_categorie != 1){ ?>
+
+
+																			<a href="#" class="btn btn-sm btn-danger mt-1 mb-1">Supprimer</a>
+
+																		
+																	 <?php }
+																	?>
+															
 															</td>
 															</tr>
 

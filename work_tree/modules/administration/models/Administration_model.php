@@ -876,6 +876,38 @@ class Administration_model extends CI_Model {
 
         }
 
+        function mdl_listCategoriesParId($id)
+        {
+
+            $convertedid=new MongoDB\BSON\ObjectId($id);
+            $listApproCartes=$this->mongo_db->where(array('_id'=>$convertedid))->get('vitrine_categorie');
+            return $listApproCartes;
+
+
+        }
+
+        function mdl_modifierCategorieType($id)
+        {
+    
+            $convertedid=new MongoDB\BSON\ObjectId($id);
+            $this->mongo_db->where(array('_id'=>$convertedid))->set('type_categorie',1)->update('vitrine_categorie');
+            return TRUE;
+    
+    
+        }
+
+        function mdl_modifierCategorie($id, $data)
+        {
+            $convertedid=new MongoDB\BSON\ObjectId($id);
+            $this->mongo_db->where(array('_id' => $convertedid));
+            $this->mongo_db->set($data);
+            $option = array('upsert' => true);
+            $this->mongo_db->update('vitrine_categorie', $option);
+
+
+            return true ;
+        }
+
         function mdl_ajoutVilleCategorie($data)
         {
     
@@ -959,6 +991,8 @@ class Administration_model extends CI_Model {
              return TRUE;
      
         }
+
+       
 
 
 
