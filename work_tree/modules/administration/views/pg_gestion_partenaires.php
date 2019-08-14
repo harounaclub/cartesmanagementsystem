@@ -54,6 +54,8 @@
 															
 
 															<a href="<?php echo base_url(); ?>administration/editerPartenaires/<?php if(isset($info["cle_image"])) echo $info["cle_image"]; ?>" class="btn btn-sm btn-primary mt-1 mb-1">Voir images</a>
+
+															<a href="<?php echo base_url(); ?>administration/editerPartenaireInfo/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-default mt-1 mb-1">Modifier partenaire</a>
                                                          
                                                             <a href="<?php echo base_url(); ?>administration/mdl_supprimPartenaire/<?php if(isset($id)) echo $id; ?>" class="btn btn-sm btn-danger mt-1 mb-1">Supprimer</a>
 															</td>

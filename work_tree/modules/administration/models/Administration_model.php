@@ -937,6 +937,16 @@ class Administration_model extends CI_Model {
  
  
          }
+
+         function mdl_infoPartenaire($id_partenaire)
+         {
+ 
+            $convertedid=new MongoDB\BSON\ObjectId($id_partenaire);
+            $infoPartenaire=$this->mongo_db->where(array('_id' => $convertedid))->get('vitrine_partenaire');
+            return $infoPartenaire;
+ 
+ 
+         }
  
          function mdl_ajoutPartenaire($data)
          {

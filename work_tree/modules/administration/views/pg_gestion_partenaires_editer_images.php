@@ -9,11 +9,24 @@
 
 <?php
 
+
+
+
+
 $infoPartenaire=$this->administration_model->mdl_listPartenairesCleImage($cle_image);
+
+
+
+
+
+
 foreach($infoPartenaire as $infoPartenaire){
 
     $lib_partenaire=$infoPartenaire["partenaireNom_vitrine"];
 }
+
+
+if($this->administration_model->mdl_imageLogo($cle_image)){
 
 $infoLogo=$this->administration_model->mdl_imageLogo($cle_image);
 foreach($infoLogo as $infoLogo){
@@ -132,4 +145,16 @@ $listImagesPartenaire=$this->administration_model->mdl_ListImagesPartenairesAutr
 									
 									
 								</div>
+
+	<?php 
+	}else{ ?>
+
+
+<h3><b>Ce partenaire <?php if(isset($lib_partenaire)) echo $lib_partenaire; ?> n'a aucune image associé</b> </h3>
+
+	
+	<?php }
+	?>
+
+
 </div>

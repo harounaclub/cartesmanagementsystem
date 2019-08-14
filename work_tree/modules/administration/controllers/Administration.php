@@ -1353,10 +1353,12 @@ class Administration extends MX_Controller {
     function envoiSmsTest(){
 
         $token=$this->get_token();
-        $tel="54823136";
-        $message="Bonjour M xxxxxxx xxxxxxxx,votre carte prixkdo n°0000 0000 0000 0000 est désormais active.Connectez-vous et profitez de réductions sur www.prixkdo.ci MDP : 0000 ";
+        $tel="59900019";
+        //$message="Bonjour Binta juste vous informer que les sms sont a nouveau fonctionnel";
+        $message="Bonjour Dion ,juste vous notifier que vos clients ont recu leur sms d activation";
         
-        $result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$tel&message=$message");
+        //$result=file_get_contents("http://cartes.gloohost.net/sms/sendSms.php?token=$token&tel=$tel&message=$message");
+        $result=file_get_contents("http://cartes.prixkdo.local/sms/sendSms.php?token=$token&tel=$tel&message=$message");
         echo $result;
     }
 
@@ -1667,18 +1669,18 @@ class Administration extends MX_Controller {
 
     function ajoutPartenaire(){
 
-        $this->form_validation->set_rules('partenaireNom_vitrine', 'nom du partenaire', 'trim|required');
-        $this->form_validation->set_rules('partenaireLocalisation_vitrine', 'localisation du partenaire', 'trim|required');
-        $this->form_validation->set_rules('partenaireReduction_vitrine', 'partenaireReduction_vitrine', 'trim|required');
+        $this->form_validation->set_rules('partenaireNom_vitrine', 'nom du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireLocalisation_vitrine', 'localisation du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireReduction_vitrine', 'partenaireReduction_vitrine', 'trim');
         $this->form_validation->set_rules('partenaireHoraire_vitrine', 'horaires du partenaire', 'trim');
-        $this->form_validation->set_rules('partenaireTelephone_vitrine', 'telephone', 'trim|required');
-        $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim|required');
+        $this->form_validation->set_rules('partenaireTelephone_vitrine', 'telephone', 'trim');
+        $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim');
         $this->form_validation->set_rules('partenaireEmail_vitrine', 'mail', 'trim');
         $this->form_validation->set_rules('partenaireSiteWeb_vitrine', 'site web', 'trim');
         $this->form_validation->set_rules('partenaireGoogleMaps_vitrine', 'partenaireGoogleMaps_vitrine', 'trim');
        
-        $this->form_validation->set_rules('id_categorie', 'categorie', 'trim|required');
-        $this->form_validation->set_rules('id_ville', 'ville', 'trim|required');
+        $this->form_validation->set_rules('id_categorie', 'categorie', 'trim');
+        $this->form_validation->set_rules('id_ville', 'ville', 'trim');
         $this->form_validation->set_rules('partenaireDescription_vitrine', 'partenaireDescription_vitrine', 'trim');
         $this->form_validation->set_rules('partenaireContenuDescription_vitrine', 'partenaireContenuDescription_vitrine', 'trim');
         
@@ -1760,6 +1762,110 @@ class Administration extends MX_Controller {
             $data["list_villes"]=$this->administration_model->mdl_listvilles();
             $data["list_categories"]=$this->administration_model->mdl_listCategories();
 	        $data["pg_content"]="pg_gestion_partenaires_ajout";
+            $this->load->view("main_view",$data);
+
+	    }
+
+        
+      
+    }
+
+    function editerPartenaireInfo($id_partenaire){
+
+        $this->form_validation->set_rules('partenaireNom_vitrine', 'nom du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireLocalisation_vitrine', 'localisation du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireReduction_vitrine', 'partenaireReduction_vitrine', 'trim');
+        $this->form_validation->set_rules('partenaireHoraire_vitrine', 'horaires du partenaire', 'trim');
+        $this->form_validation->set_rules('partenaireTelephone_vitrine', 'telephone', 'trim');
+        $this->form_validation->set_rules('partenaireTelephone_mobile_vitrine', 'telephone', 'trim');
+        $this->form_validation->set_rules('partenaireEmail_vitrine', 'mail', 'trim');
+        $this->form_validation->set_rules('partenaireSiteWeb_vitrine', 'site web', 'trim');
+        $this->form_validation->set_rules('partenaireGoogleMaps_vitrine', 'partenaireGoogleMaps_vitrine', 'trim');
+       
+        $this->form_validation->set_rules('id_categorie', 'categorie', 'trim');
+        $this->form_validation->set_rules('id_ville', 'ville', 'trim');
+        $this->form_validation->set_rules('partenaireDescription_vitrine', 'partenaireDescription_vitrine', 'trim');
+        $this->form_validation->set_rules('partenaireContenuDescription_vitrine', 'partenaireContenuDescription_vitrine', 'trim');
+        
+        
+        
+        
+
+	   
+	      
+	    if($this->form_validation->run()) 
+	    {
+         
+            $partenaireNom_vitrine=$this->input->post('partenaireNom_vitrine');
+            $partenaireLocalisation_vitrine=$this->input->post('partenaireLocalisation_vitrine');
+            $partenaireHoraire_vitrine=$this->input->post('partenaireHoraire_vitrine');
+            $partenaireTelephone_vitrine=$this->input->post('partenaireTelephone_vitrine');
+            $partenaireTelephone_mobile_vitrine=$this->input->post('partenaireTelephone_mobile_vitrine');
+            $partenaireEmail_vitrine=$this->input->post('partenaireEmail_vitrine');
+            $partenaireSiteWeb_vitrine=$this->input->post('partenaireSiteWeb_vitrine');
+
+            $partenaireContenuDescription_vitrine=$this->input->post('partenaireContenuDescription_vitrine');
+            
+            $partenaireReduction_vitrine=$this->input->post('partenaireReduction_vitrine');
+            $partenaireGoogleMaps_vitrine=$this->input->post('partenaireGoogleMaps_vitrine');
+            
+            $id_categorie=$this->input->post('id_categorie');
+            $cle_image=$this->input->post('cle_image');
+            $id_ville=$this->input->post('id_ville');
+            $partenaireDescription_vitrine=$this->input->post('partenaireDescription_vitrine');
+            
+            $dateCreation_vitrine=date("d-m-Y");
+            $partenaire_status=1;
+
+          
+           
+            $id_administrateur=$this->session->userdata('id_admin');
+
+
+
+            $data_partenaire = array(
+
+                'partenaireNom_vitrine'  => $partenaireNom_vitrine,            
+                'partenaireLocalisation_vitrine'=> $partenaireLocalisation_vitrine,
+                'partenaireHoraire_vitrine'=> $partenaireHoraire_vitrine,
+                'partenaireTelephone_vitrine'=> $partenaireTelephone_vitrine, 
+                'partenaireTelephone_mobile_vitrine'=> $partenaireTelephone_mobile_vitrine, 
+                'partenaireEmail_vitrine'=> $partenaireEmail_vitrine, 
+                'partenaireReduction_vitrine'=> $partenaireReduction_vitrine, 
+                'partenaireGoogleMaps_vitrine'=> $partenaireGoogleMaps_vitrine, 
+                
+                'dateCreation_vitrine'=> $dateCreation_vitrine,
+                'id_categorie'=> $id_categorie,
+                'partenaire_status'=> $partenaire_status,
+                'id_ville'=> $id_ville,
+                'partenaireDescription_vitrine'=> $partenaireDescription_vitrine,
+                'partenaireContenuDescription_vitrine'=> $partenaireContenuDescription_vitrine,
+                'cle_image'=> $cle_image,
+
+                'id_administrateur'=> $id_administrateur, 
+
+            );
+
+            
+
+            if($this->administration_model->mdl_ajoutPartenaire($data_partenaire)){
+
+                $this->gestionPartenaires();
+            }
+
+
+            
+
+	               
+
+	    }else
+	    {
+
+            $data["cle_image"]=$this->administration_model->clePrimaire(10);
+            $data["list_villes"]=$this->administration_model->mdl_listvilles();
+            $data["list_categories"]=$this->administration_model->mdl_listCategories();
+            $data["info_partenaire"]=$this->administration_model->mdl_infoPartenaire($id_partenaire);
+	        $data["pg_content"]="pg_gestion_partenaires_editer";
             $this->load->view("main_view",$data);
 
 	    }
@@ -1877,9 +1983,10 @@ class Administration extends MX_Controller {
 
 
 
-    private function get_token(){
+    function get_token(){
 
-        $token=file_get_contents("http://cartes.gloohost.net/sms/getToken.php");
+        //$token=file_get_contents("http://cartes.gloohost.net/sms/getToken.php");
+        $token=file_get_contents("http://cartes.prixkdo.local/sms/getToken.php");
         return $token;
     }
 
