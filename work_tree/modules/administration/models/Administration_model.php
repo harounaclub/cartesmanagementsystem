@@ -956,6 +956,18 @@ class Administration_model extends CI_Model {
      
          }
 
+        function mdl_modifierPartenaire($id, $data)
+        {
+            $convertedid=new MongoDB\BSON\ObjectId($id);
+            $this->mongo_db->where(array('_id' => $convertedid));
+            $this->mongo_db->set($data);
+            $option = array('upsert' => true);
+            $this->mongo_db->update('vitrine_partenaire', $option);
+
+
+            return true ;
+        }
+
          function mdl_ajoutPartenaireLogo($data)
          {
      

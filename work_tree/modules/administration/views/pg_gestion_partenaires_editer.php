@@ -5,6 +5,15 @@ if(isset($info_partenaire)){
     foreach($info_partenaire as $info){
 
 
+        $id_mongo=$info["_id"];
+        foreach($id_mongo as $val){
+
+            $id_partenaire=$val;
+        }
+
+
+       
+
         $partenaireNom_vitrine=$info["partenaireNom_vitrine"];
         $partenaireLocalisation_vitrine=$info["partenaireLocalisation_vitrine"];
         $partenaireHoraire_vitrine=$info["partenaireHoraire_vitrine"];
@@ -19,6 +28,10 @@ if(isset($info_partenaire)){
 
         $partenaireDescription_vitrine=$info["partenaireDescription_vitrine"];
         $partenaireContenuDescription_vitrine=$info["partenaireContenuDescription_vitrine"];
+
+        $partenaireDescription_vitrine=$info["partenaireDescription_vitrine"];
+        $partenaireSiteWeb_vitrine=$info["partenaireSiteWeb_vitrine"];
+        
 
 
         $cle_image=$info["cle_image"];
@@ -54,7 +67,7 @@ if(isset($info_partenaire)){
 
 <br>
 <br>
-							<?php echo form_open('administration/ajoutPartenaire'); ?>
+							<?php echo form_open('administration/editerPartenaireInfo/'.$id_partenaire); ?>
 							<div class="row">
 								<div class="col-md-12">
 									<div class="card shadow">
@@ -65,6 +78,7 @@ if(isset($info_partenaire)){
 											<div class="row">
 
 											<input class="form-control" id="cle_image" name="cle_image"  type="hidden" value="<?php if(isset($cle_image)) echo $cle_image;?>">
+                                            <input class="form-control" id="id_partenaire" name="id_partenaire"  type="hidden" value="<?php if(isset($id_partenaire)) echo $id_partenaire;?>">
 												<div class="col-md-6">
 													<div class="form-group">
 														<input type="text" class="form-control" name="partenaireNom_vitrine" placeholder="Entrer le nom du partenaire" value="<?php if(isset($partenaireNom_vitrine)) echo $partenaireNom_vitrine; ?>">
@@ -175,21 +189,21 @@ if(isset($info_partenaire)){
                                                     </div>
 
 													<div class="form-group">
-														<input type="text" class="form-control" name="partenaireReduction_vitrine" placeholder="Entrer la reduction en % du partenaire" value="" >
+														<input type="text" class="form-control" name="partenaireReduction_vitrine" placeholder="Entrer la reduction en % du partenaire" value="<?php if(isset($partenaireReduction_vitrine)) echo $partenaireReduction_vitrine; ?>" >
 													    <?php echo form_error('partenaireReduction_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
                                                     
 
 													<div class="form-group">
-														<input type="text" class="form-control" name="partenaireHoraire_vitrine" placeholder="Entrer les horaires" value="" >
+														<input type="text" class="form-control" name="partenaireHoraire_vitrine" placeholder="Entrer les horaires" value="<?php if(isset($partenaireHoraire_vitrine)) echo $partenaireHoraire_vitrine; ?>" >
 													    <?php echo form_error('partenaireHoraire_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
 													
 
                                                     <div class="form-group">
-														<input type="text" class="form-control" name="partenaireSiteWeb_vitrine" placeholder="Entrer le site web" value="" >
+														<input type="text" class="form-control" name="partenaireSiteWeb_vitrine" placeholder="Entrer le site web" value="<?php if(isset($partenaireSiteWeb_vitrine)) echo $partenaireSiteWeb_vitrine; ?>" >
 													    <?php echo form_error('partenaireSiteWeb_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
@@ -205,11 +219,11 @@ if(isset($info_partenaire)){
 												<div class="col-md-12">
 
 												    <div class="form-group">
-														<input type="text" class="form-control" name="partenaireGoogleMaps_vitrine" placeholder="Entrer le iframe google maps" value="" >
+														<input type="text" class="form-control" name="partenaireGoogleMaps_vitrine" placeholder="Entrer le iframe google maps" value="<?php if(isset($partenaireGoogleMaps_vitrine)) echo $partenaireGoogleMaps_vitrine; ?>" >
 													    <?php echo form_error('partenaireHoraire_vitrine','<font color="red">','</font>'); ?>
 													</div>
 												     <div class="form-group">
-														<textarea class="form-control" name="partenaireDescription_vitrine" placeholder="Entrer la courte description du commerce" rows="3"></textarea>
+														<textarea class="form-control" name="partenaireDescription_vitrine" placeholder="Entrer la courte description du commerce" rows="3"><?php if(isset($partenaireDescription_vitrine)) echo $partenaireDescription_vitrine; ?></textarea>
 													 </div>
 												</div>
 
@@ -220,28 +234,7 @@ if(isset($info_partenaire)){
 												    <div class="form-group">
 
 													   <textarea class='editor' name="partenaireContenuDescription_vitrine">
-
-													   <h5 class="listing-title">Nom du commerce</h5>
-                                                       <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque </p>
-													   <h5 class="listing-title">Offre :</h5>
-													   <ul>
-													      <li>x % de réduction ....</li>
-														  <li>x % de réduction ....</li>
-														  <li>x % de réduction ....</li>
-														  <li>x % de réduction ....</li>
-													    </ul>
-
-														<span> <b><i class="fa fa-phone" aria-hidden="true"></i>Contact :</b> 59 00 00 00 / 01 00 00 00 </span> <br>
-														<span> <b><i class="fa fa-envelope-o" aria-hidden="true"></i>Adresse :</b> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque</span><br>
-														<span> <b>Cuisine :</b> Patisserie</span>
-													
-
-														 
-
-
-
-													  
-														
+                                                             <?php if(isset($partenaireContenuDescription_vitrine)) echo $partenaireContenuDescription_vitrine; ?>
 														</textarea>
 													</div>
 

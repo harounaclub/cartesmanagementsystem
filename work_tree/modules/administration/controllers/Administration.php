@@ -1710,6 +1710,7 @@ class Administration extends MX_Controller {
             $cle_image=$this->input->post('cle_image');
             $id_ville=$this->input->post('id_ville');
             $partenaireDescription_vitrine=$this->input->post('partenaireDescription_vitrine');
+            $partenaireSiteWeb_vitrine=$this->input->post('partenaireSiteWeb_vitrine');
             
             $dateCreation_vitrine=date("d-m-Y");
             $partenaire_status=1;
@@ -1728,6 +1729,7 @@ class Administration extends MX_Controller {
                 'partenaireTelephone_vitrine'=> $partenaireTelephone_vitrine, 
                 'partenaireTelephone_mobile_vitrine'=> $partenaireTelephone_mobile_vitrine, 
                 'partenaireEmail_vitrine'=> $partenaireEmail_vitrine, 
+                'partenaireSiteWeb_vitrine'=> $partenaireSiteWeb_vitrine, 
                 'partenaireReduction_vitrine'=> $partenaireReduction_vitrine, 
                 'partenaireGoogleMaps_vitrine'=> $partenaireGoogleMaps_vitrine, 
                 
@@ -1820,6 +1822,12 @@ class Administration extends MX_Controller {
           
            
             $id_administrateur=$this->session->userdata('id_admin');
+            $id_partenaire=$this->input->post('id_partenaire');
+
+           
+
+
+        
 
 
 
@@ -1846,9 +1854,12 @@ class Administration extends MX_Controller {
 
             );
 
+
             
 
-            if($this->administration_model->mdl_ajoutPartenaire($data_partenaire)){
+            
+
+            if($this->administration_model->mdl_modifierPartenaire($id_partenaire,$data_partenaire)){
 
                 $this->gestionPartenaires();
             }
