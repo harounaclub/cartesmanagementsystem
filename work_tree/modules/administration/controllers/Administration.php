@@ -1425,6 +1425,15 @@ class Administration extends MX_Controller {
        
     }
 
+    function check_ville(){
+
+        $id="5caff3ff0777d5063208b874";
+        $nb_ville=$this->administration_model->mdl_compterVille($id);
+        echo $nb_ville;
+
+
+    }
+
     function supprimVilles($id){
         
         if($this->administration_model->mdl_supprimApproCartes($id)){
@@ -1617,6 +1626,7 @@ class Administration extends MX_Controller {
                 'iconecategorie_vitrine'  => $iconecategorie_vitrine,
                 'categorie_vitrine'  => $categorie_vitrine,            
                 'categorieDescription_vitrine'=> $categorieDescription_vitrine,
+                'codecategorie_vitrine'=> $codecategorie_vitrine,
                 'dateCreation_vitrine'=> $dateCreation_vitrine,
                 'id_administrateur'=> $id_administrateur, 
 

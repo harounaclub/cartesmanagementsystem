@@ -30,6 +30,7 @@
 
 															if(isset($list_categories)){
 															$compt=0;
+															$nb_categories=0;
 															foreach ($list_categories as $info) {
 																$compt++;
 																
@@ -39,6 +40,8 @@
 																}
 
 																$type_categorie=$info["type_categorie"];
+
+																$nb_categories=$this->administration_model->mdl_compterCategorie($id);
 																
 															
 															?>

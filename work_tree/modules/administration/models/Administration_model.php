@@ -1014,6 +1014,24 @@ class Administration_model extends CI_Model {
      
         }
 
+        function mdl_compterVille($id_ville){
+            
+            $nb_compterVille=$this->mongo_db->where('id_ville',$id_ville)->count('vitrine_partenaire');
+            return $nb_compterVille;
+        
+        
+        }
+
+
+        function mdl_compterCategorie($id_categorie){
+            
+            $nb_compterCat=$this->mongo_db->where('id_categorie',$id_categorie)->count('vitrine_partenaire');
+            return $nb_compterCat;
+        
+        
+        }
+    
+
        
 
 

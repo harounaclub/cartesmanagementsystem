@@ -27,13 +27,21 @@
 
 															if(isset($list_villes)){
 															$compt=0;
+															$nb_ville=0;
 															foreach ($list_villes as $info) {
 																$compt++;
 																
 																foreach($info["_id"] as $value){
 
 																	$id=$value;
+
+				
 																}
+
+																
+
+																$nb_ville=$this->administration_model->mdl_compterVille($id);
+																
 																
 															?>
 
@@ -41,7 +49,7 @@
 															<td><?php echo $compt; ?></td>
 															<td><?php if(isset($info["vitrine_ville"])) echo $info["vitrine_ville"]; ?></td>
 															<td><?php if(isset($info["dateCreation_vitrine"])) echo $info["dateCreation_vitrine"]; ?></td>
-															<td>0</td>
+															<td><?php if(isset($nb_ville)) echo $nb_ville; ?></td>
 															
 															
 															

@@ -39,7 +39,7 @@
 													</div>
 
 													<div class="form-group">
-														<input type="text" class="form-control" name="codecategorie_vitrine" placeholder="Entrer le code de la categorie" value="<?php if(isset($info["codecategorie_vitrine"])) echo $info["codecategorie_vitrine"]; ?>" readonly>
+														<input type="text" class="form-control" name="codecategorie_vitrine" placeholder="Entrer le code de la categorie" value="<?php if(isset($info["codecategorie_vitrine"])) echo $info["codecategorie_vitrine"]; ?>">
 														<?php echo form_error('codecategorie_vitrine','<font color="red">','</font>'); ?>
 													</div>
 
